@@ -69,9 +69,10 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
 
 // Checkbox para fecha vuelta
 document.getElementById('roundTrip').addEventListener('change', function() {
-  const retField = document.getElementById('returnDate');
-  retField.style.display = this.checked ? 'block' : 'none';
-  retField.required = this.checked;
+  const returnContainer = document.getElementById('return-date-container');
+  const returnInput = document.getElementById('returnDate');
+  returnContainer.style.display = this.checked ? 'block' : 'none';
+  returnInput.required = this.checked;
 });
 
 // Inicializa mapa
@@ -88,34 +89,34 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 let control; // para guardar la ruta
 
 function getRoute(start, end, type) {
-  if (type === "avion") {
-    // Distancia en línea recta
-    const R = 6371;
-    const toRad = x => x * Math.PI / 180;
-    const dLat = toRad(end[0] - start[0]);
-    const dLon = toRad(end[1] - start[1]);
-    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(start[0])) * Math.cos(toRad(end[0])) * Math.sin(dLon/2)**2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    const distKm = R * c;
-    const timeHr = (distKm / 800);
-    const flightTime = `${Math.floor(timeHr)}h ${Math.round((timeHr % 1) * 60)}min`;
-    L.polyline([start, end], { color: 'blue', weight: 3, dashArray: '5,5' }).addTo(map);
-    document.getElementById('route-summary').textContent = `✈️ Vuelo: ${distKm.toFixed(1)} km | Tiempo Aprox: ${flightTime}`;
-    document.getElementById('msg').textContent = `Reserva confirmada para vuelo.`;
-  } else {
-    // Ruta terrestre con OSRM
-    if (control) map.removeControl(control);
-    control = L.Routing.control({
-      waypoints: [
-        L.latLng(start[0], start[1]),
-        L.latLng(end[0], end[1])
-      ],
-      lineOptions: { styles: [{ color: 'red', weight: 4 }] },
-      show: false,
-      addWaypoints: false,
-      routeWhileDragging: false,
-      draggableWaypoints: false
-    }).addTo(map);
+if (type === "avion") {
+// Distancia en línea recta
+const R = 6371;
+const toRad = x => x * Math.PI / 180;
+const dLat = toRad(end[0] - start[0]);
+const dLon = toRad(end[1] - start[1]);
+const a = Math.sin(dLat/2)**2 + Math.cos(toRad(start[0])) * Math.cos(toRad(end[0])) * Math.sin(dLon/2)**2;
+const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+const distKm = R * c;
+const timeHr = (distKm / 800); // Calculamos horas
+const flightTime = `${Math.floor(timeHr)}h ${Math.round((timeHr % 1) * 60)}min`; // Formato Xh Ymin
+L.polyline([start, end], { color: 'blue', weight: 3, dashArray: '5,5' }).addTo(map);
+document.getElementById('route-summary').textContent = `✈️ Vuelo: ${distKm.toFixed(1)} km | Tiempo Aprox: ${flightTime}`;
+document.getElementById('msg').textContent = `Reserva confirmada para vuelo.`;
+} else {
+// Ruta terrestre con OSRM
+if (control) map.removeControl(control);
+control = L.Routing.control({
+  waypoints: [
+    L.latLng(start[0], start[1]),
+    L.latLng(end[0], end[1])
+  ],
+  lineOptions: { styles: [{ color: 'red', weight: 4 }] },
+  show: false,
+  addWaypoints: false,
+  routeWhileDragging: false,
+  draggableWaypoints: false
+}).addTo(map);
 
     control.on('routesfound', function(e) {
       const summary = e.routes[0].summary;
@@ -123,10 +124,13 @@ function getRoute(start, end, type) {
       const timeMin = Math.round(summary.totalTime / 60);
       const busTime = `${Math.floor(timeMin / 60)}h ${timeMin % 60}min`;
 
-      document.getElementById('route-summary').textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
-      document.getElementById('msg').textContent = `Reserva confirmada para ruta terrestre.`;
-    });
-  }
+  // Mostrar resumen por encima del mapa
+  document.getElementById('route-summary').textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
+
+  // Mensaje de confirmación abajo
+  document.getElementById('msg').textContent = `Reserva confirmada para ruta terrestre.`;
+});
+}
 }
 
 // Evento de envío del formulario
@@ -156,7 +160,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
       map.removeLayer(layer);
     }
   });
-  document.getElementById('route-summary').textContent = "";
+  document.getElementById('route-summary').textContent = ""; // Limpia el resumen anterior
   if (control) {
     map.removeControl(control);
     control = null;
