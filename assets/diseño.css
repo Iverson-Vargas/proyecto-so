@@ -238,25 +238,44 @@ button:hover {
   background: #c03030; /* Un rojo un poco más oscuro para el hover */
 }
 
+/* --- Contenedor del Mapa y Resumen --- */
+.map-container {
+  flex: 2;
+  min-width: 400px;
+  position: relative; /* Clave para posicionar el resumen dentro */
+}
+
 /* --- Mapa --- */
 #map {
-  flex: 2; /* Ocupa el doble de espacio que el formulario */
-  min-width: 400px;
-  height: 600px; /* Altura aumentada para mejor visualización */
+  width: 100%;
+  height: 600px;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* --- Panel de Resumen de Ruta (sobre el mapa) --- */
+#route-summary {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 37, 84, 0.9); /* Azul oscuro con transparencia */
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 800; /* Por debajo del header pero sobre el mapa */
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  white-space: nowrap; /* Evita que el texto se parta en dos líneas */
+}
+
 /* --- Mensajes y otros elementos --- */
 #msg {
-  text-align: center;
-  font-weight: bold;
-  color: var(--primary-dark-blue);
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 8px;
-  background-color: #e8f0fe;
+  /* Los estilos se aplicarán desde JS para mayor flexibilidad */
+  margin-top: 10px;
 }
 
 #returnDate {

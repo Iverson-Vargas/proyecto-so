@@ -68,10 +68,11 @@ const dLon = toRad(end[1] - start[1]);
 const a = Math.sin(dLat/2)**2 + Math.cos(toRad(start[0])) * Math.cos(toRad(end[0])) * Math.sin(dLon/2)**2;
 const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 const distKm = R * c;
-const timeHr = (distKm / 800).toFixed(2);
+const timeHr = (distKm / 800); // Calculamos horas
+const flightTime = `${Math.floor(timeHr)}h ${Math.round((timeHr % 1) * 60)}min`; // Formato Xh Ymin
 L.polyline([start, end], { color: 'blue', weight: 3, dashArray: '5,5' }).addTo(map);
-document.getElementById('busSummary').textContent = ""; // limpiar panel bus
-document.getElementById('msg').textContent = `✈️ Vuelo: ${distKm.toFixed(1)} km, Tiempo aprox: ${timeHr} horas.`;
+document.getElementById('route-summary').textContent = `✈️ Vuelo: ${distKm.toFixed(1)} km | Tiempo Aprox: ${flightTime}`;
+document.getElementById('msg').textContent = `Reserva confirmada para vuelo.`;
 } else {
 // Ruta terrestre con OSRM
 if (control) map.removeControl(control);
@@ -91,14 +92,13 @@ control.on('routesfound', function(e) {
   const summary = e.routes[0].summary;
   const distKm = (summary.totalDistance / 1000).toFixed(1);
   const timeMin = Math.round(summary.totalTime / 60);
+  const busTime = `${Math.floor(timeMin / 60)}h ${timeMin % 60}min`; // Formato Xh Ymin
 
   // Mostrar resumen por encima del mapa
-  document.getElementById('busSummary').textContent =
-    `🚌 Ruta más rápida en bus: ${distKm} km | Tiempo: ${timeMin} minutos`;
+  document.getElementById('route-summary').textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
 
   // Mensaje de confirmación abajo
-  document.getElementById('msg').textContent =
-    `Reserva confirmada: Ruta terrestre calculada correctamente.`;
+  document.getElementById('msg').textContent = `Reserva confirmada para ruta terrestre.`;
 });
 }
 }
@@ -131,6 +131,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
       map.removeLayer(layer);
     }
   });
+  document.getElementById('route-summary').textContent = ""; // Limpia el resumen anterior
   if (control) {
     map.removeControl(control);
     control = null;

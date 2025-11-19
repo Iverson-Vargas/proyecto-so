@@ -52,9 +52,11 @@
     <button type="submit">Reservar y Mostrar Ruta</button>
   </form>
 
-  <div id="busSummary" style="text-align:center; font-weight:bold; color:#d9534f; margin-top:10px;"></div>
-<div id="map"></div>
-<p id="msg"></p>
+  <div class="map-container">
+    <div id="route-summary"></div>
+    <div id="map"></div>
+    <div id="msg"></div>
+  </div>
     </main>
 
     <footer id="pie-pagina">
