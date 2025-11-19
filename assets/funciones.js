@@ -39,9 +39,10 @@ Object.keys(locations).forEach(loc => {
 
 // Checkbox para fecha vuelta
 document.getElementById('roundTrip').addEventListener('change', function() {
-  const retField = document.getElementById('returnDate');
-  retField.style.display = this.checked ? 'block' : 'none';
-  retField.required = this.checked;
+  const returnContainer = document.getElementById('return-date-container');
+  const returnInput = document.getElementById('returnDate');
+  returnContainer.style.display = this.checked ? 'block' : 'none';
+  returnInput.required = this.checked;
 });
 
 // Inicializa mapa
@@ -71,7 +72,9 @@ const distKm = R * c;
 const timeHr = (distKm / 800); // Calculamos horas
 const flightTime = `${Math.floor(timeHr)}h ${Math.round((timeHr % 1) * 60)}min`; // Formato Xh Ymin
 L.polyline([start, end], { color: 'blue', weight: 3, dashArray: '5,5' }).addTo(map);
-document.getElementById('route-summary').textContent = `✈️ Vuelo: ${distKm.toFixed(1)} km | Tiempo Aprox: ${flightTime}`;
+const summaryEl = document.getElementById('route-summary');
+summaryEl.textContent = `✈️ Vuelo: ${distKm.toFixed(1)} km | Tiempo Aprox: ${flightTime}`;
+summaryEl.classList.add('visible'); // Muestra el panel
 document.getElementById('msg').textContent = `Reserva confirmada para vuelo.`;
 } else {
 // Ruta terrestre con OSRM
@@ -94,8 +97,10 @@ control.on('routesfound', function(e) {
   const timeMin = Math.round(summary.totalTime / 60);
   const busTime = `${Math.floor(timeMin / 60)}h ${timeMin % 60}min`; // Formato Xh Ymin
 
+  const summaryEl = document.getElementById('route-summary');
   // Mostrar resumen por encima del mapa
-  document.getElementById('route-summary').textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
+  summaryEl.textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
+  summaryEl.classList.add('visible'); // Muestra el panel
 
   // Mensaje de confirmación abajo
   document.getElementById('msg').textContent = `Reserva confirmada para ruta terrestre.`;
@@ -131,7 +136,8 @@ document.getElementById('form').addEventListener('submit', function(e) {
       map.removeLayer(layer);
     }
   });
-  document.getElementById('route-summary').textContent = ""; // Limpia el resumen anterior
+  const summaryEl = document.getElementById('route-summary');
+  summaryEl.classList.remove('visible'); // Oculta el panel
   if (control) {
     map.removeControl(control);
     control = null;
