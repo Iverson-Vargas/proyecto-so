@@ -55,7 +55,6 @@
   <div id="busSummary" style="text-align:center; font-weight:bold; color:#d9534f; margin-top:10px;"></div>
 <div id="map"></div>
 <p id="msg"></p>
->>>>>>> e11f211b8936d40faded4344a688366d61add4bc
     </main>
 
     <footer id="pie-pagina">
