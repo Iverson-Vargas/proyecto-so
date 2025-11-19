@@ -1,0 +1,321 @@
+/* Paleta de colores inspirada en LATAM */
+:root {
+  --primary-dark-blue: #002554;
+  --primary-red: #D94343;
+  --light-gray-bg: #f4f4f9;
+  --text-color: #333;
+  --white: #fff;
+  --border-color: #ccc;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+  background: var(--light-gray-bg);
+  color: var(--text-color);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto; /* Flexibilidad en filas */
+  min-height: 100vh;
+  grid-template-areas:
+    "menuSuperior"
+    "contenido"
+    "piePagina";
+}
+
+/* --- Estructura Principal --- */
+#menu-superior {
+  grid-area: menuSuperior;
+  background: var(--white);
+  padding: 10px 40px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distribuye el espacio */
+  z-index: 1000; /* Para que esté sobre el mapa */
+}
+
+/* --- Estilos del Header --- */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-dark-blue);
+  text-decoration: none;
+}
+
+.logo b {
+  color: var(--primary-red);
+}
+
+#menu-superior nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 30px; /* Aumentamos el espacio */
+  align-items: center;
+}
+
+#menu-superior nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+  padding: 5px 0;
+  position: relative;
+  transition: color 0.3s;
+}
+
+#menu-superior nav a:hover {
+  color: var(--primary-red);
+}
+
+/* Subrayado animado para los enlaces de navegación */
+#menu-superior nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-red);
+  transition: width 0.3s;
+}
+
+#menu-superior nav a:hover::after {
+  width: 100%;
+}
+
+.login-btn {
+  background-color: var(--primary-dark-blue);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #001a3d;
+  transform: translateY(-2px);
+}
+
+#contenido-principal {
+  grid-area: contenido;
+  padding: 20px;
+  display: flex; /* Usamos flexbox para alinear el formulario y el mapa */
+  flex-wrap: wrap; /* Permitir que los elementos se reorganicen en pantallas pequeñas */
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* --- Footer --- */
+#pie-pagina {
+  grid-area: piePagina;
+  background: var(--primary-dark-blue);
+  color: #a9b2c2; /* Un gris azulado claro para el texto */
+  padding: 50px 40px 20px 40px; /* Más padding */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #003c7a; /* Línea divisoria sutil */
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 220px;
+}
+
+.footer-column h3 {
+  color: var(--white);
+  font-size: 18px;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+/* Línea decorativa debajo de los títulos del footer */
+.footer-column h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 30px;
+  height: 2px;
+  background-color: var(--primary-red);
+}
+
+.footer-column p, .footer-column ul, .footer-column a {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column a {
+  color: #a9b2c2;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-column a:hover {
+  color: var(--white);
+}
+
+.social-links a {
+  display: block; /* Para que cada enlace ocupe una línea */
+  margin-bottom: 5px;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 14px;
+}
+
+/* --- Formulario de Búsqueda --- */
+#form {
+  background: var(--white);
+  flex: 1; /* Ocupa el espacio disponible */
+  min-width: 320px; /* Ancho mínimo para el formulario */
+  max-width: 450px; /* Ancho máximo */
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+label {
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-sizing: border-box; /* Importante para que el padding no afecte el ancho */
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-dark-blue);
+  box-shadow: 0 0 5px rgba(0, 37, 84, 0.2);
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  background: var(--primary-red);
+  color: var(--white);
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background: #c03030; /* Un rojo un poco más oscuro para el hover */
+}
+
+/* --- Mapa --- */
+#map {
+  flex: 2; /* Ocupa el doble de espacio que el formulario */
+  min-width: 400px;
+  height: 600px; /* Altura aumentada para mejor visualización */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Mensajes y otros elementos --- */
+#msg {
+  text-align: center;
+  font-weight: bold;
+  color: var(--primary-dark-blue);
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #e8f0fe;
+}
+
+#returnDate {
+  display: none;
+}
+
+/* --- Checkbox personalizado --- */
+/* Oculta el checkbox por defecto */
+.checkbox-container input {
+  display: none;
+}
+
+/* Estilo para el label que actuará como nuestro checkbox */
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+/* Crea el recuadro del checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  background-color: #eee;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+}
+
+/* Cuando el checkbox está seleccionado, cambia el fondo */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: var(--primary-dark-blue);
+}
+
+/* Crea la marca de verificación (oculta cuando no está seleccionada) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Muestra la marca de verificación cuando está seleccionado */
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Estilo de la marca de verificación */
+.checkbox-container .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
