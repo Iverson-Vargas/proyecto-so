@@ -15,10 +15,9 @@
       
       <nav>
         <ul>
-          <li><a href="#">Inicio</a></li>
+          <li><a href="index.php">Inicio</a></li>
           <li><a href="#">Destinos</a></li>
           <li><a href="#">Reservas</a></li>
-          <li><a href="#">Contacto</a></li>
         </ul>
       </nav>
       
@@ -36,7 +35,7 @@
         <label>Fecha Ida:</label>
         <input type="date" id="depDate" required>
     
-        <label><input type="checkbox" id="roundTrip"> Ida y Vuelta</label>
+        <label><input type="checkbox" id="roundTrip">Fecha Vuelta:</label>
         <input type="date" id="returnDate" placeholder="Fecha Vuelta">
     
         <label>Pasajeros:</label>
@@ -66,7 +65,7 @@
                 <a href="#">Facebook</a>
                 <a href="#">Instagram</a>
                 <a href="#">Twitter / X</a>
-                
+
             </div>
         </div>
       </div>
