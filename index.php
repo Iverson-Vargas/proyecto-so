@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <title>Agencia de Viajes Venezuela</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
   <link rel="stylesheet" href="assets/diseño.css">
 </head>
 <body>
@@ -26,32 +28,35 @@
     </header>
 
     <main id="contenido-principal">
-      <form id="form">
-        <label>Origen:</label>
-        <select id="origin" required><option value="">Selecciona</option></select>
-    
-        <label>Destino:</label>
-        <select id="dest" required><option value="">Selecciona</option></select>
-    
-        <label>Fecha Ida:</label>
-        <input type="date" id="depDate" required>
-    
-        <label><input type="checkbox" id="roundTrip"> Ida y Vuelta</label>
-        <input type="date" id="returnDate" placeholder="Fecha Vuelta">
-    
-        <label>Pasajeros:</label>
-        <input type="number" id="pass" min="1" value="1" required>
-    
-        <label>Tipo de Transporte:</label>
-        <select id="type">
-          <option value="bus">Bus</option>
-          <option value="avion">Avión</option>
-        </select>
-    
-        <button type="submit">Reservar y Mostrar Ruta</button>
-      </form>
-    
-      <div id="map"></div>
+    <form id="form">
+    <label>Origen:</label>
+    <select id="origin" required><option value="">Selecciona</option></select>
+
+    <label>Destino:</label>
+    <select id="dest" required><option value="">Selecciona</option></select>
+
+    <label>Fecha Ida:</label>
+    <input type="date" id="depDate" required>
+
+    <label><input type="checkbox" id="roundTrip"> Ida y Vuelta</label>
+    <input type="date" id="returnDate" placeholder="Fecha Vuelta">
+
+    <label>Pasajeros:</label>
+    <input type="number" id="pass" min="1" value="1" required>
+
+    <label>Tipo de Transporte:</label>
+    <select id="type">
+      <option value="bus">Bus</option>
+      <option value="avion">Avión</option>
+    </select>
+
+    <button type="submit">Reservar y Mostrar Ruta</button>
+  </form>
+
+ 
+  <div id="busSummary" style="text-align:center; font-weight:bold; color:#d9534f; margin-top:10px;"></div>
+<div id="map"></div>
+<p id="msg"></p>
     </main>
 
     <footer id="pie-pagina">
