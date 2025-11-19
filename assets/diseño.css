@@ -115,31 +115,31 @@ body {
   grid-area: piePagina;
   background: var(--primary-dark-blue);
   color: #a9b2c2; /* Un gris azulado claro para el texto */
-  padding: 30px 40px 15px 40px; /* Padding reducido */
+  padding: 15px 40px 10px 40px; /* Padding mínimo */
 }
 
 .footer-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 20px; /* Espacio entre columnas reducido */
   max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 25px; /* Padding inferior reducido */
+  padding-bottom: 15px; /* Padding inferior mínimo */
   border-bottom: 1px solid #003c7a; /* Línea divisoria sutil */
 }
 
 .footer-column {
   flex: 1;
-  min-width: 220px;
+  min-width: 200px;
 }
 
 .footer-column h3 {
   color: var(--white);
-  font-size: 18px;
-  margin-bottom: 15px; /* Margen inferior reducido */
+  font-size: 15px; /* Tamaño de fuente muy reducido */
+  margin-bottom: 8px; /* Margen inferior mínimo */
   position: relative;
-  padding-bottom: 8px; /* Padding inferior reducido */
+  padding-bottom: 5px;
 }
 
 /* Línea decorativa debajo de los títulos del footer */
@@ -148,14 +148,14 @@ body {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 30px;
+  width: 25px; /* Línea más corta */
   height: 2px;
   background-color: var(--primary-red);
 }
 
 .footer-column p, .footer-column ul, .footer-column a {
-  font-size: 15px;
-  line-height: 1.6; /* Interlineado reducido */
+  font-size: 13px; /* Tamaño de fuente muy reducido */
+  line-height: 1.4; /* Interlineado mínimo */
 }
 
 .footer-column ul {
@@ -180,8 +180,8 @@ body {
 
 .footer-bottom {
   text-align: center;
-  padding-top: 15px; /* Padding superior reducido */
-  font-size: 14px;
+  padding-top: 8px; /* Padding superior mínimo */
+  font-size: 12px; /* Tamaño de fuente muy reducido */
 }
 
 /* --- Formulario de Búsqueda --- */
