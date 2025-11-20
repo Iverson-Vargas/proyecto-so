@@ -127,10 +127,10 @@ control = L.Routing.control({
   // Mostrar resumen por encima del mapa
   document.getElementById('route-summary').textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
 
-  // Mensaje de confirmación abajo
-  document.getElementById('msg').textContent = `Reserva confirmada para ruta terrestre.`;
-});
-}
+      // Mostrar el panel de resumen
+      document.getElementById('route-summary').classList.add('visible');
+    });
+  }
 }
 
 // Evento de envío del formulario
@@ -178,7 +178,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
       map.removeLayer(layer);
     }
   });
-  document.getElementById('route-summary').textContent = "";
+  document.getElementById('route-summary').textContent = ""; // Limpia el resumen anterior
   if (control) {
     map.removeControl(control);
     control = null;
@@ -194,16 +194,15 @@ document.getElementById('form').addEventListener('submit', function(e) {
     end = terminals[dest];
   }
 
-  // Agrega marcadores
-  L.marker(start).addTo(map).bindPopup(`<b>Salida:</b> ${origin}`).openPopup();
-  L.marker(end).addTo(map).bindPopup(`<b>Destino:</b> ${dest}`);
-  map.fitBounds([start, end], { padding: [20, 20] });
-
-  // Calcula ruta
-  getRoute(start, end, type);
-
-  // Mensaje final
-  msg.textContent += ` | Reserva: ${pass} pasajero(s), Ida: ${depDate}${retDate ? ', Vuelta: ' + retDate : ''}, Tipo: ${type}.`;
-});
-
+   // Agrega marcadores para partida y llegada
+   L.marker(start).addTo(map).bindPopup(`<b>Salida:</b> ${origin}`).openPopup();
+   L.marker(end).addTo(map).bindPopup(`<b>Destino:</b> ${dest}`);
+   map.fitBounds([start, end], { padding: [20, 20] });
+ 
+   // Llama a la función de cálculo de ruta
+   getRoute(start, end, type);
+ 
+   // Mensaje de confirmación de reserva
+   msg.textContent += ` | Reserva: ${pass} pasajero(s), Ida: ${depDate}${retDate ? ', Vuelta: ' + retDate : ''}, Tipo: ${type}.`;
+ });
  

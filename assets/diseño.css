@@ -348,3 +348,104 @@ button:hover {
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
+
+/* --- Ventana Modal de Autenticación --- */
+.auth-modal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 1001; /* Por encima de todo */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.auth-modal-content {
+  background: var(--white);
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.auth-modal.visible {
+  display: flex;
+  opacity: 1;
+}
+
+.auth-modal.visible .auth-modal-content {
+  transform: scale(1);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #aaa;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.auth-form h2 {
+  text-align: center;
+  color: var(--primary-dark-blue);
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+.auth-form {
+  display: none; /* Oculto por defecto */
+  flex-direction: column;
+  width: 100%; /* Asegura que ocupe todo el espacio del contenedor */
+}
+
+.auth-form input { margin-bottom: 15px; } /* Usa los estilos de input globales */
+.auth-form button { margin-top: 10px; } /* Usa los estilos de button globales */
+
+.auth-form p {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-form p a {
+  color: var(--primary-red);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.auth-form p a:hover {
+  text-decoration: underline;
+}
+
+#user-greeting { display: none; align-items: center; }
+#user-greeting span { margin-right: 15px; font-weight: bold; }
+#logout-btn {
+  background: var(--primary-red);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+#logout-btn:hover {
+  background-color: #c03030;
+}
