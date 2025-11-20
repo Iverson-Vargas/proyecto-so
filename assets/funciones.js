@@ -1,6 +1,6 @@
 // Aeropuertos principales por estado
 const airports = {
-  "Amazonas": [3.4653, -65.1013], //trreterte
+  "Amazonas": [3.4653, -65.1013], 
   "Anzoátegui": [10.1111, -64.6922],
   "Apure": [7.8800, -67.4440],
   "Aragua": [10.2469, -67.6494],
@@ -145,6 +145,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
   const type = document.getElementById('type').value;
   const msg = document.getElementById('msg');
 
+  // Validaciones básicas
   if (!origin || !dest || !depDate) {
     msg.textContent = "Completa todos los campos obligatorios.";
     return;
@@ -154,13 +155,30 @@ document.getElementById('form').addEventListener('submit', function(e) {
     return;
   }
 
+  // Validación de fechas
+  const today = new Date();
+  today.setHours(0,0,0,0); // Normalizamos a medianoche
+  const dep = new Date(depDate);
+  const ret = retDate ? new Date(retDate) : null;
+
+  if (dep < today) {
+    msg.textContent = "La fecha de ida no puede ser anterior a hoy.";
+    return;
+  }
+  if (ret && ret < dep) {
+    msg.textContent = "La fecha de vuelta no puede ser anterior a la fecha de ida.";
+    return;
+  }
+
+  
+
   // Limpia capas anteriores
   map.eachLayer(layer => {
     if (layer instanceof L.Marker || layer instanceof L.Polyline) {
       map.removeLayer(layer);
     }
   });
-  document.getElementById('route-summary').textContent = ""; // Limpia el resumen anterior
+  document.getElementById('route-summary').textContent = "";
   if (control) {
     map.removeControl(control);
     control = null;
@@ -176,15 +194,16 @@ document.getElementById('form').addEventListener('submit', function(e) {
     end = terminals[dest];
   }
 
-   // Agrega marcadores para partida y llegada
-   L.marker(start).addTo(map).bindPopup(`<b>Salida:</b> ${origin}`).openPopup();
-   L.marker(end).addTo(map).bindPopup(`<b>Destino:</b> ${dest}`);
-   map.fitBounds([start, end], { padding: [20, 20] });
- 
-   // Llama a la función de cálculo de ruta
-   getRoute(start, end, type);
- 
-   // Mensaje de confirmación de reserva
-   msg.textContent += ` | Reserva: ${pass} pasajero(s), Ida: ${depDate}${retDate ? ', Vuelta: ' + retDate : ''}, Tipo: ${type}.`;
- });
+  // Agrega marcadores
+  L.marker(start).addTo(map).bindPopup(`<b>Salida:</b> ${origin}`).openPopup();
+  L.marker(end).addTo(map).bindPopup(`<b>Destino:</b> ${dest}`);
+  map.fitBounds([start, end], { padding: [20, 20] });
+
+  // Calcula ruta
+  getRoute(start, end, type);
+
+  // Mensaje final
+  msg.textContent += ` | Reserva: ${pass} pasajero(s), Ida: ${depDate}${retDate ? ', Vuelta: ' + retDate : ''}, Tipo: ${type}.`;
+});
+
  
