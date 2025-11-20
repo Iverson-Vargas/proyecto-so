@@ -127,10 +127,10 @@ control = L.Routing.control({
   // Mostrar resumen por encima del mapa
   document.getElementById('route-summary').textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
 
-  // Mensaje de confirmación abajo
-  document.getElementById('msg').textContent = `Reserva confirmada para ruta terrestre.`;
-});
-}
+      // Mostrar el panel de resumen
+      document.getElementById('route-summary').classList.add('visible');
+    });
+  }
 }
 
 // Evento de envío del formulario
@@ -161,6 +161,7 @@ document.getElementById('form').addEventListener('submit', function(e) {
     }
   });
   document.getElementById('route-summary').textContent = ""; // Limpia el resumen anterior
+  document.getElementById('route-summary').classList.remove('visible'); // Oculta el resumen anterior
   if (control) {
     map.removeControl(control);
     control = null;
@@ -187,4 +188,99 @@ document.getElementById('form').addEventListener('submit', function(e) {
    // Mensaje de confirmación de reserva
    msg.textContent += ` | Reserva: ${pass} pasajero(s), Ida: ${depDate}${retDate ? ', Vuelta: ' + retDate : ''}, Tipo: ${type}.`;
  });
+
+ // --- LÓGICA DE AUTENTICACIÓN ---
+
+ document.addEventListener('DOMContentLoaded', () => {
+  const authModal = document.getElementById('auth-modal');
+  const loginBtn = document.getElementById('login-btn');
+  const closeBtn = document.querySelector('.close-btn');
+  const showRegister = document.getElementById('show-register');
+  const showLogin = document.getElementById('show-login');
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  const userSession = document.getElementById('user-session');
+  const userGreeting = document.getElementById('user-greeting');
+  const usernameDisplay = document.getElementById('username-display');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  // Mostrar modal de login
+  loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    authModal.classList.add('visible');
+    loginForm.style.display = 'flex';
+    registerForm.style.display = 'none';
+  });
+
+  // Cerrar modal
+  closeBtn.addEventListener('click', () => authModal.classList.remove('visible'));
+  window.addEventListener('click', (e) => {
+    if (e.target == authModal) {
+      authModal.classList.remove('visible');
+    }
+  });
+
+  // Cambiar a formulario de registro
+  showRegister.addEventListener('click', () => {
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'flex';
+  });
+
+  // Cambiar a formulario de login
+  showLogin.addEventListener('click', () => {
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'flex';
+  });
+
+  // Lógica de Registro
+  registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const user = document.getElementById('register-user').value;
+    const pass = document.getElementById('register-pass').value;
+    // Simulamos guardado en localStorage
+    localStorage.setItem('user', JSON.stringify({ user, pass }));
+    alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+    showLogin.click(); // Muestra el formulario de login
+  });
+
+  // Lógica de Inicio de Sesión
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const user = document.getElementById('login-user').value;
+    const pass = document.getElementById('login-pass').value;
+    const savedUser = JSON.parse(localStorage.getItem('user'));
+
+    if (savedUser && savedUser.user === user && savedUser.pass === pass) {
+      sessionStorage.setItem('loggedInUser', user); // Guardamos sesión
+      updateHeader(user);
+      authModal.classList.remove('visible');
+    } else {
+      alert('Usuario o contraseña incorrectos.');
+    }
+  });
+
+  // Lógica de Cerrar Sesión
+  logoutBtn.addEventListener('click', () => {
+    sessionStorage.removeItem('loggedInUser');
+    updateHeader(null);
+  });
+
+  // Actualizar cabecera
+  function updateHeader(user) {
+    if (user) {
+      loginBtn.style.display = 'none';
+      userGreeting.style.display = 'flex';
+      usernameDisplay.textContent = `Hola, ${user}`;
+    } else {
+      loginBtn.style.display = 'block';
+      userGreeting.style.display = 'none';
+    }
+  }
+
+  // Comprobar si hay sesión activa al cargar la página
+  const loggedInUser = sessionStorage.getItem('loggedInUser');
+  if (loggedInUser) {
+    updateHeader(loggedInUser);
+  }
+});
  
