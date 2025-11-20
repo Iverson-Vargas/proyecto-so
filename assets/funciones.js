@@ -1,6 +1,6 @@
 // Aeropuertos principales por estado
 const airports = {
-  "Amazonas": [3.4653, -65.1013],
+  "Amazonas": [3.4653, -65.1013], //trreterte
   "Anzoátegui": [10.1111, -64.6922],
   "Apure": [7.8800, -67.4440],
   "Aragua": [10.2469, -67.6494],
