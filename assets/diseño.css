@@ -283,8 +283,15 @@ button:hover {
 
 /* --- Mensajes y otros elementos --- */
 #msg {
-  /* Los estilos se aplicarán desde JS para mayor flexibilidad */
+  /* Estilos revertidos a su estado original */
   margin-top: 10px;
+  color: #D94343; /* Un color de error simple */
+  font-weight: bold;
+}
+
+#msg.success-message {
+  color: #002554; /* Azul oscuro para mensajes de éxito */
+  font-weight: bold;
 }
 
 /* Oculta el contenedor de la fecha de vuelta por defecto */
@@ -446,6 +453,71 @@ button:hover {
   font-weight: 600;
   transition: background-color 0.3s;
 }
+
+.my-trips-btn {
+  background: none;
+  border: 1px solid var(--primary-dark-blue);
+  color: var(--primary-dark-blue);
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+  margin-right: 10px; /* Espacio entre este botón y el de cerrar sesión */
+}
+.my-trips-btn:hover { background-color: #eef2f7; }
 #logout-btn:hover {
   background-color: #c03030;
+}
+
+/* Estilo para el botón de registrar compra */
+.btn-register-purchase {
+  margin-top: 15px;
+  width: 100%;
+  background: var(--primary-dark-blue);
+  color: var(--white);
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.btn-register-purchase:hover {
+  background: #001a3d;
+}
+
+/* Estilos para la lista de viajes en el modal */
+#trips-list {
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.trip-item {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-left: 4px solid var(--primary-red);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  line-height: 1.5;
+  display: flex; /* Para alinear el texto y el botón */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-trip-info {
+  background-color: var(--primary-dark-blue);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap; /* Evita que el texto se parta */
+  transition: background-color 0.3s;
 }
