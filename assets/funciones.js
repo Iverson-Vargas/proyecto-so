@@ -26,32 +26,32 @@ const airports = {
   "Zulia": [10.5582, -71.7279]
 };
 
-// Terminales terrestres por estado
+// Terminales terrestres por estado, ahora con nombre y coordenadas
 const terminals = {
-  "Amazonas": [5.650613782742305, -67.59310942895101],  // Terminal de Pasajeros Puerto Ayacucho
-  "Anzoátegui": [10.123681424194466, -64.68354612344999],     // Terminal de Pasajeros Barcelona
-  "Apure": [7.89656094871939, -67.4753583832889],           // Terminal de Pasajeros San Fernando
-  "Aragua": [10.245032457233117, -67.58776027522032],         // Terminal de Pasajeros Maracay
-  "Barinas": [8.64142747965079, -70.22753660469094],         // Terminal de Pasajeros Barinas
-  "Bolívar": [8.462779675243633, -63.66116572628907],         // Terminal de Pasajeros Puerto Ordaz
-  "Carabobo": [10.197469659295036, -67.96852764238429],       // Terminal Big Low (Valencia)
-  "Cojedes": [9.65284673277371, -68.58403395807892 ],         // Terminal de Pasajeros San Carlos
-  "Delta Amacuro": [9.076830077835188, -62.037749848152515 ],   // Terminal de Pasajeros Tucupita
-  "Distrito Capital": [10.476115591458624, -66.89919697726691], // Terminal10.58052853690481, -66.5940259860205 La Bandera (Caracas)
-  "Falcón": [11.687162817101377, -70.18534593265818],         // Terminal de Pasajeros Punto Fijo
-  "Guárico": [9.305243787086345, -65.98178215191969],         // Terminal de Pasajeros Valle de la Pascua
-  "Lara": [10.06933, -69.33440],           // Terminal de Pasajeros Barquisimeto 
-  "Mérida": [8.637808150215173, -71.66433597947722],          // Terminal de Pasajeros Mérida
-  "Miranda": [10.344078701889702, -67.04272729938059  ],        // Terminal de Pasajeros Los Teques
-  "Monagas": [9.737219384456608, -63.201355283212116],         // Terminal de Pasajeros Maturín
-  "Nueva Esparta": [10.96012, -63.85025],  // Terminal de Pasajeros Porlamar
-  "Portuguesa": [9.601074504204362, -69.19304494913783],      // Terminal de Pasajeros Guanare
-  "Sucre": [10.472390116397278, -64.18537204360018],          // Terminal de Pasajeros Cumaná
-  "Táchira": [7.840254732615906, -72.43835449483387],         // Terminal de Pasajeros San Cristóbal
-  "Trujillo": [9.386749550101761, -70.42747875497906],        // Terminal de Pasajeros Valera
-  "Vargas": [10.601621804970058, -66.92959513657432],         // Terminal de Pasajeros La Guaira
-  "Yaracuy": [10.333709235387866, -68.7373078453064],        // Terminal de Pasajeros San Felipe
-  "Zulia": [10.635609528486466, -71.61930152192801]           // Terminal de Pasajeros Maracaibo
+  "Amazonas": { coords: [5.650613782742305, -67.59310942895101], name: "Terminal de Pasajeros Puerto Ayacucho" },
+  "Anzoátegui": { coords: [10.123681424194466, -64.68354612344999], name: "Terminal de Pasajeros Barcelona" },
+  "Apure": { coords: [7.89656094871939, -67.4753583832889], name: "Terminal de Pasajeros San Fernando" },
+  "Aragua": { coords: [10.245032457233117, -67.58776027522032], name: "Terminal de Pasajeros Maracay" },
+  "Barinas": { coords: [8.64142747965079, -70.22753660469094], name: "Terminal de Pasajeros Barinas" },
+  "Bolívar": { coords: [8.462779675243633, -63.66116572628907], name: "Terminal de Pasajeros Puerto Ordaz" },
+  "Carabobo": { coords: [10.197469659295036, -67.96852764238429], name: "Terminal Big Low Center (Valencia)" },
+  "Cojedes": { coords: [9.65284673277371, -68.58403395807892], name: "Terminal de Pasajeros San Carlos" },
+  "Delta Amacuro": { coords: [9.076830077835188, -62.037749848152515], name: "Terminal de Pasajeros Tucupita" },
+  "Distrito Capital": { coords: [10.476115591458624, -66.89919697726691], name: "Terminal La Bandera (Caracas)" },
+  "Falcón": { coords: [11.687162817101377, -70.18534593265818], name: "Terminal de Pasajeros Punto Fijo" },
+  "Guárico": { coords: [9.305243787086345, -65.98178215191969], name: "Terminal de Pasajeros Valle de la Pascua" },
+  "Lara": { coords: [10.06933, -69.33440], name: "Terminal de Pasajeros Barquisimeto" },
+  "Mérida": { coords: [8.637808150215173, -71.66433597947722], name: "Terminal de Pasajeros Mérida" },
+  "Miranda": { coords: [10.344078701889702, -67.04272729938059], name: "Terminal de Pasajeros Los Teques" },
+  "Monagas": { coords: [9.737219384456608, -63.201355283212116], name: "Terminal de Pasajeros Maturín" },
+  "Nueva Esparta": { coords: [10.96012, -63.85025], name: "Terminal de Pasajeros Porlamar" },
+  "Portuguesa": { coords: [9.601074504204362, -69.19304494913783], name: "Terminal de Pasajeros Guanare" },
+  "Sucre": { coords: [10.472390116397278, -64.18537204360018], name: "Terminal de Pasajeros Cumaná" },
+  "Táchira": { coords: [7.840254732615906, -72.43835449483387], name: "Terminal de Pasajeros San Cristóbal" },
+  "Trujillo": { coords: [9.386749550101761, -70.42747875497906], name: "Terminal de Pasajeros Valera" },
+  "Vargas": { coords: [10.601621804970058, -66.92959513657432], name: "Terminal de Pasajeros La Guaira" },
+  "Yaracuy": { coords: [10.333709235387866, -68.7373078453064], name: "Terminal de Pasajeros San Felipe" },
+  "Zulia": { coords: [10.635609528486466, -71.61930152192801], name: "Terminal de Pasajeros Maracaibo" }
 };
 
 
@@ -68,11 +68,8 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
 });
 
 
- // --- LÓGICA DE AUTENTICACIÓN ---
-
  document.addEventListener('DOMContentLoaded', () => {
   // --- REUBICACIÓN DEL CONTENEDOR DE MENSAJES ---
-  // Mueve el div #msg para que aparezca justo antes del formulario #form.
   const formElement = document.getElementById('form');
   const msgElement = document.getElementById('msg');
   if (formElement && msgElement) {
@@ -135,13 +132,6 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
   `;
   document.body.insertAdjacentHTML('beforeend', tripDetailModalHTML);
 
-  const authModal = document.getElementById('auth-modal');
-  const loginBtn = document.getElementById('login-btn');
-  const closeBtn = document.querySelector('.close-btn');
-  const loginForm = document.getElementById('login-form');
-  const registerForm = document.getElementById('register-form');
-  const showRegisterLink = document.getElementById('show-register');
-  const showLoginLink = document.getElementById('show-login');
   const userSessionDiv = document.getElementById('user-session');
   const userGreetingDiv = document.getElementById('user-greeting');
   const usernameDisplay = document.getElementById('username-display');
@@ -161,6 +151,10 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
   const tripDetailModal = document.getElementById('trip-detail-modal');
   const tripDetailCloseBtn = document.querySelector('.trip-detail-close-btn');
   const tripDetailContent = document.getElementById('trip-detail-content');
+
+  // Variables para almacenar temporalmente los datos de la ruta
+  let waypointSummary = [];
+  let currentBusTime = null;
 
   // --- LÓGICA DEL FORMULARIO DE RESERVA ---
 
@@ -185,23 +179,29 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
 
   let control; // para guardar la ruta
 
+  // Función para calcular distancia entre dos puntos (Haversine)
+  function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radio de la Tierra en km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
   function getRoute(start, end, type) {
     if (type === "avion") {
       // Distancia en línea recta
-      const R = 6371;
-      const toRad = x => x * Math.PI / 180;
-      const dLat = toRad(end[0] - start[0]);
-      const dLon = toRad(end[1] - start[1]);
-      const a = Math.sin(dLat/2)**2 + Math.cos(toRad(start[0])) * Math.cos(toRad(end[0])) * Math.sin(dLon/2)**2;
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      const distKm = R * c;
+      const distKm = getDistance(start[0], start[1], end[0], end[1]);
       const timeHr = (distKm / 800); // Calculamos horas
       const flightTime = `${Math.floor(timeHr)}h ${Math.round((timeHr % 1) * 60)}min`; // Formato Xh Ymin
       L.polyline([start, end], { color: 'blue', weight: 3, dashArray: '5,5' }).addTo(map);
       document.getElementById('route-summary').textContent = `✈️ Vuelo: ${distKm.toFixed(1)} km | Tiempo Aprox: ${flightTime}`;
       document.getElementById('route-summary').classList.add('visible');
     } else {
-      // Ruta terrestre con OSRM
+      // Ruta terrestre con OSRM (método original)
       if (control) map.removeControl(control);
       control = L.Routing.control({
         waypoints: [
@@ -209,22 +209,85 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
           L.latLng(end[0], end[1])
         ],
         lineOptions: { styles: [{ color: 'red', weight: 4 }] },
-        show: false,
+        show: false, // no muestra el panel de texto de la ruta
         addWaypoints: false,
         routeWhileDragging: false,
         draggableWaypoints: false
       }).addTo(map);
 
       control.on('routesfound', function(e) {
-        const summary = e.routes[0].summary;
+        const route = e.routes[0];
+        const summary = route.summary;
         const distKm = (summary.totalDistance / 1000).toFixed(1);
         const timeMin = Math.round(summary.totalTime / 60);
         const busTime = `${Math.floor(timeMin / 60)}h ${timeMin % 60}min`;
+        currentBusTime = busTime; // Guardamos el tiempo total
 
-        // Mostrar resumen por encima del mapa
+        // --- LÓGICA PARA DETECTAR ESTADOS INTERMEDIOS Y TIEMPO ---
+        const routeCoordinates = route.coordinates;
+        const originState = originSel.value;
+        const destState = destSel.value;
+        const PROXIMITY_THRESHOLD_KM = 30; // Umbral de 30km
+        
+        let intermediateWaypoints = []; // Almacena { state, timeFromStart, distanceFromStart }
+        
+        for (const state in terminals) {
+          if (state !== originState && state !== destState) {
+            const intermediateTerminalCoords = terminals[state].coords;
+            let minDistanceToRoute = Infinity;
+            let closestPointIndex = -1;
+
+            // Encuentra el punto en la ruta más cercano a este terminal intermedio
+            routeCoordinates.forEach((point, index) => {
+              const distance = getDistance(intermediateTerminalCoords[0], intermediateTerminalCoords[1], point.lat, point.lng);
+              if (distance < minDistanceToRoute) {
+                minDistanceToRoute = distance;
+                closestPointIndex = index;
+              }
+            });
+
+            if (minDistanceToRoute <= PROXIMITY_THRESHOLD_KM) {
+              // Aproxima el tiempo y la distancia a este punto en la ruta
+              const timeToPoint = (closestPointIndex / (routeCoordinates.length - 1)) * summary.totalTime;
+              const distanceToPoint = (closestPointIndex / (routeCoordinates.length - 1)) * summary.totalDistance;
+              
+              intermediateWaypoints.push({
+                state: state,
+                timeFromStart: timeToPoint,
+                distanceFromStart: distanceToPoint
+              });
+            }
+          }
+        }
+
+        // Ordena los puntos de paso por distancia para obtener la secuencia correcta
+        intermediateWaypoints.sort((a, b) => a.distanceFromStart - b.distanceFromStart);
+
+        // Ahora, calcula el tiempo entre cada segmento
+        waypointSummary = [];
+        let lastTime = 0;
+        let lastState = originState;
+
+        intermediateWaypoints.forEach(waypoint => {
+          waypointSummary.push({
+            from: lastState,
+            to: waypoint.state,
+            time: waypoint.timeFromStart - lastTime
+          });
+          lastTime = waypoint.timeFromStart;
+          lastState = waypoint.state;
+        });
+
+        // Añade el tramo final hasta el destino
+        waypointSummary.push({
+          from: lastState,
+          to: destState,
+          time: summary.totalTime - lastTime
+        });
+        // --- FIN DE LA LÓGICA ---
+
+        // Muestra el resumen en el panel
         document.getElementById('route-summary').textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
-
-        // Mostrar el panel de resumen
         document.getElementById('route-summary').classList.add('visible');
       });
     }
@@ -246,6 +309,8 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
     msg.textContent = "";
     msg.className = ""; // Limpia clases como 'success-message'
     document.getElementById('route-summary').classList.remove('visible');
+    waypointSummary = []; // Reseteamos el resumen de ruta
+    currentBusTime = null; // Reseteamos el tiempo total
 
     // Validaciones básicas
     if (!origin || !dest || !depDate) {
@@ -296,8 +361,8 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
       start = airports[origin];
       end = airports[dest];
     } else {
-      start = terminals[origin];
-      end = terminals[dest];
+      start = terminals[origin].coords;
+      end = terminals[dest].coords;
     }
 
      // Agrega marcadores para partida y llegada
@@ -319,7 +384,9 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
        passengers: pass,
        departureDate: depDate,
        returnDate: retDate || null, // Guardar null si no hay fecha de vuelta
-       transportType: type
+       transportType: type,
+       waypointSummary: (type === 'bus') ? waypointSummary : null,
+       totalTime: (type === 'bus') ? currentBusTime : null
      };
 
      if (currentUser) {
@@ -338,6 +405,11 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
        registerBtn.type = 'button'; // Importante para que no envíe el formulario
        
        registerBtn.onclick = () => {
+         // Actualizamos el objeto tripData justo antes de abrir el modal de pago
+         // para asegurarnos de que los datos de la ruta asíncrona estén listos.
+         tripData.waypointSummary = (type === 'bus') ? waypointSummary : null;
+         tripData.totalTime = (type === 'bus') ? currentBusTime : null;
+
          document.getElementById('payment-summary').textContent = reservationDetails;
          // Guardar temporalmente los datos del viaje para usarlos en el pago
          paymentForm.dataset.tripData = JSON.stringify(tripData);
@@ -348,37 +420,13 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
 
      } else {
        // Usuario NO ha iniciado sesión
-       msg.innerHTML = `Para registrar la compra, por favor <a href="#" id="login-from-msg">inicia sesión</a>.`;
-       
-       // Añadir evento al enlace para abrir el modal de login
-       document.getElementById('login-from-msg').addEventListener('click', (e) => {
-         e.preventDefault();
-         openModal();
-       });
+       msg.innerHTML = `Para registrar la compra, por favor <a href="login.php">inicia sesión</a>.`;
      }
   });
-
-  // --- Funciones para manejar la visibilidad del modal ---
-  const openModal = () => {
-    authModal.classList.add('visible');
-    loginForm.style.display = 'flex';
-    registerForm.style.display = 'none';
-  };
-
-  const closeModal = () => {
-    authModal.classList.remove('visible');
-  };
 
   const closePaymentModal = () => {
     paymentModal.classList.remove('visible');
   };
-
-  loginBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal();
-  });
-
-  closeBtn.addEventListener('click', closeModal);
 
   tripsCloseBtn.addEventListener('click', () => {
     tripsModal.classList.remove('visible');
@@ -391,51 +439,8 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
   paymentCloseBtn.addEventListener('click', closePaymentModal);
 
   window.addEventListener('click', (e) => {
-    if (e.target === authModal || e.target === paymentModal) {
-      closeModal();
-    }
-  });
-
-  // --- Funciones para cambiar entre formularios ---
-  showRegisterLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    loginForm.style.display = 'none';
-    registerForm.style.display = 'flex';
-  });
-
-  showLoginLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    registerForm.style.display = 'none';
-    loginForm.style.display = 'flex';
-  });
-
-  // --- Lógica de Registro ---
-  registerForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const user = document.getElementById('register-user').value;
-    const pass = document.getElementById('register-pass').value;
-
-    if (localStorage.getItem(user)) {
-      alert('El nombre de usuario ya existe.');
-    } else {
-      localStorage.setItem(user, pass);
-      alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
-      showLoginLink.click(); // Muestra el formulario de login
-    }
-  });
-
-  // --- Lógica de Inicio de Sesión ---
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const user = document.getElementById('login-user').value;
-    const pass = document.getElementById('login-pass').value;
-
-    if (localStorage.getItem(user) && localStorage.getItem(user) === pass) {
-      sessionStorage.setItem('currentUser', user);
-      updateUIForLoggedInUser(user);
-      closeModal();
-    } else {
-      alert('Usuario o contraseña incorrectos.');
+    if (e.target === paymentModal || e.target === tripsModal || e.target === tripDetailModal) {
+      e.target.classList.remove('visible');
     }
   });
 
@@ -469,12 +474,11 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
   // --- Lógica de Cierre de Sesión ---
   logoutBtn.addEventListener('click', () => {
     sessionStorage.removeItem('currentUser');
-    updateUIForLoggedOutUser();
+    window.location.href = 'login.php';
   });
 
   // --- Funciones para actualizar la interfaz ---
   function updateUIForLoggedInUser(user) {
-    loginBtn.style.display = 'none';
     userGreetingDiv.style.display = 'flex';
     usernameDisplay.textContent = `Hola, ${user}`; 
 
@@ -504,6 +508,36 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
             infoBtn.textContent = 'Información';
             infoBtn.className = 'btn-trip-info';
             infoBtn.onclick = () => {
+              let waypointSummaryHTML = '';
+              const recorridoLabels = ["Primer", "Segundo", "Tercer", "Cuarto", "Quinto", "Sexto", "Séptimo", "Octavo", "Noveno", "Décimo"];
+
+              // Si es un viaje en bus y tiene un resumen de ruta, lo formateamos
+              if (trip.transportType === 'bus' && trip.waypointSummary && trip.waypointSummary.length > 0) {
+                waypointSummaryHTML += '<h4>Resumen de la Ruta:</h4><ul style="padding-left: 0; text-align: left; list-style-type: none;">';
+                trip.waypointSummary.forEach((segment, index) => {
+                  const timeInSeconds = segment.time;
+                  // No mostrar segmentos con tiempo 0 o negativo
+                  if (timeInSeconds > 0) {
+                    const segmentTime = `${Math.floor(timeInSeconds / 3600)}h ${Math.round((timeInSeconds % 3600) / 60)}min`;
+                    const label = recorridoLabels[index] || `${index + 1}º`;
+                    
+                    waypointSummaryHTML += `
+                      <li style="margin-bottom: 12px; border-left: 3px solid #ccc; padding-left: 10px;">
+                        <div style="font-weight: bold;">${label} Recorrido</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <span>${segment.from} → ${segment.to}</span>
+                          <span style="color: #555; font-style: italic;">${segmentTime}</span>
+                        </div>
+                      </li>`;
+                  }
+                });
+                waypointSummaryHTML += '</ul>';
+
+                if (trip.totalTime) {
+                    waypointSummaryHTML += `<hr><p style="text-align: right; font-weight: bold; margin-top: 10px;">Total de Horas: ${trip.totalTime}</p>`;
+                }
+              }
+
               tripDetailContent.innerHTML = `
                 <p><strong>Origen:</strong> ${trip.origin}</p>
                 <p><strong>Destino:</strong> ${trip.dest}</p>
@@ -511,6 +545,7 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
                 <p><strong>Fecha de Ida:</strong> ${trip.departureDate}</p>
                 ${trip.returnDate ? `<p><strong>Fecha de Vuelta:</strong> ${trip.returnDate}</p>` : ''}
                 <p><strong>Transporte:</strong> ${trip.transportType === 'avion' ? 'Avión ✈️' : 'Autobús 🚌'}</p>
+                ${waypointSummaryHTML}
               `;
               tripDetailModal.classList.add('visible');
             };
@@ -529,24 +564,15 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
     }
   }
 
-  function updateUIForLoggedOutUser() {
-    loginBtn.style.display = 'block';
-    userGreetingDiv.style.display = 'none';
-    document.getElementById('my-trips-btn')?.remove(); // Elimina el botón al cerrar sesión
-    usernameDisplay.textContent = '';
-  }
-
   // --- Comprobar estado de sesión al cargar la página ---
   const checkLoginStatus = () => {
     const currentUser = sessionStorage.getItem('currentUser');
     if (currentUser) {
       updateUIForLoggedInUser(currentUser);
     } else {
-      updateUIForLoggedOutUser();
+      window.location.href = 'login.php';
     }
   };
 
   checkLoginStatus();
  });
-
- 

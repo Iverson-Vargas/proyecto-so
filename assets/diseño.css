@@ -356,7 +356,7 @@ button:hover {
   transform: rotate(45deg);
 }
 
-/* --- Ventana Modal de Autenticación --- */
+/* --- Ventana Modal (Genérica para Pago, Mis Viajes, etc.) --- */
 .auth-modal {
   display: none; /* Oculto por defecto */
   position: fixed;
@@ -416,13 +416,13 @@ button:hover {
 }
 
 .auth-form {
-  display: none; /* Oculto por defecto */
+  display: flex; /* Cambiado para que sea visible dentro del modal */
   flex-direction: column;
-  width: 100%; /* Asegura que ocupe todo el espacio del contenedor */
+  width: 100%;
 }
 
-.auth-form input { margin-bottom: 15px; } /* Usa los estilos de input globales */
-.auth-form button { margin-top: 10px; } /* Usa los estilos de button globales */
+.auth-form input { margin-bottom: 15px; }
+.auth-form button { margin-top: 10px; }
 
 .auth-form p {
   margin-top: 20px;

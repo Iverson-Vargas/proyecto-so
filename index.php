@@ -13,38 +13,15 @@
 
 <body>
 
-
   <header id="menu-superior">
     <a href="#" class="logo">Vuela<b>Vzla</b></a>
     <div id="user-session">
-      <a href="#" id="login-btn" class="login-btn">Iniciar Sesión</a>
       <div id="user-greeting">
         <span id="username-display"></span>
         <button id="logout-btn">Cerrar Sesión</button>
       </div>
     </div>
   </header>
-
-  <!-- Ventana Modal de Autenticación -->
-  <div id="auth-modal" class="auth-modal">
-    <div class="auth-modal-content">
-      <span class="close-btn">&times;</span>
-      <form id="login-form" class="auth-form">
-        <h2>Iniciar Sesión</h2>
-        <input type="text" id="login-user" placeholder="Nombre de usuario" required>
-        <input type="password" id="login-pass" placeholder="Contraseña" required>
-        <button type="submit">Entrar</button>
-        <p>¿No tienes cuenta? <a id="show-register">Regístrate aquí</a></p>
-      </form>
-      <form id="register-form" class="auth-form">
-        <h2>Registro</h2>
-        <input type="text" id="register-user" placeholder="Nombre de usuario" required>
-        <input type="password" id="register-pass" placeholder="Contraseña" required>
-        <button type="submit">Registrarse</button>
-        <p>¿Ya tienes cuenta? <a id="show-login">Inicia sesión aquí</a></p>
-      </form>
-    </div>
-  </div>
 
   <main id="contenido-principal">
     <form id="form">
