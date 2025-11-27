@@ -70,12 +70,35 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
 
 
  document.addEventListener('DOMContentLoaded', () => {
+  
   // --- REUBICACIÓN DEL CONTENEDOR DE MENSAJES ---
   const formElement = document.getElementById('form');
   const msgElement = document.getElementById('msg');
   if (formElement && msgElement) {
     formElement.insertBefore(msgElement, formElement.firstChild);
   }
+
+  // --- ESTILOS GLOBALES PARA MODALES ---
+  const modalStyles = `
+    <style>
+      .auth-modal-content {
+        max-width: 480px; /* Ancho máximo reducido para la mayoría de modales */
+        max-height: 85vh; /* Altura máxima para evitar que se estire demasiado */
+        overflow-y: auto; /* Scroll vertical si el contenido es muy largo */
+      }
+
+      /* Ajuste para la modal de detalles que puede tener más contenido */
+      #trip-detail-modal .auth-modal-content {
+        max-width: 600px;
+      }
+
+      /* Ajuste para la modal de mensajes simples */
+      #message-modal .auth-modal-content {
+        max-width: 400px;
+      }
+    </style>
+  `;
+  document.head.insertAdjacentHTML('beforeend', modalStyles);
 
   // --- CREACIÓN DE MODALES ---
   const registrationModalHTML = `
@@ -97,7 +120,7 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
 
   const tripsModalHTML = `
     <div id="trips-modal" class="auth-modal">
-      <div class="auth-modal-content" style="max-width: 500px;">
+      <div class="auth-modal-content">
         <span class="close-btn trips-close-btn">&times;</span>
         <h2>Vuelos Registrados por Usted</h2>
         <div id="trips-list"></div>
@@ -141,6 +164,17 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
   `;
   document.body.insertAdjacentHTML('beforeend', adminModalHTML);
 
+  // --- MODAL DE MENSAJES (REEMPLAZO DE ALERT) ---
+  const messageModalHTML = `
+    <div id="message-modal" class="auth-modal">
+      <div class="auth-modal-content" style="text-align: center;">
+        <span class="close-btn message-close-btn">&times;</span>
+        <div id="message-modal-content" style="margin-top: 15px; margin-bottom: 25px;"></div>
+        <button id="message-modal-ok-btn" class="btn-register-purchase">Aceptar</button>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', messageModalHTML);
 
   // --- REFERENCIAS A ELEMENTOS DEL DOM ---
   const userGreetingDiv = document.getElementById('user-greeting');
@@ -164,6 +198,11 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
   const createUserForm = document.getElementById('create-user-form');
   const employeeListDiv = document.getElementById('employee-list');
   const adminMsg = document.getElementById('admin-msg');
+
+  const messageModal = document.getElementById('message-modal');
+  const messageModalContent = document.getElementById('message-modal-content');
+  const messageCloseBtn = document.querySelector('.message-close-btn');
+  const messageOkBtn = document.getElementById('message-modal-ok-btn');
 
 
   // --- LÓGICA DEL FORMULARIO DE BÚSQUEDA ---
@@ -435,11 +474,21 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
      getRoute(start, end, type, handleRouteData);
   });
 
+  // --- FUNCIONES DE MODALES ---
   const closeModal = (modal) => {
     modal.classList.remove('visible');
   };
 
+  const showMessage = (message, title = 'Información') => {
+    messageModalContent.innerHTML = `<h2>${title}</h2><p>${message}</p>`;
+    messageModal.classList.add('visible');
+  };
+
   registrationCloseBtn.addEventListener('click', () => closeModal(registrationModal));
+  const closeMessageModal = () => closeModal(messageModal);
+  messageCloseBtn.addEventListener('click', closeMessageModal);
+  messageOkBtn.addEventListener('click', closeMessageModal);
+
   tripsCloseBtn.addEventListener('click', () => closeModal(tripsModal));
   tripDetailCloseBtn.addEventListener('click', () => closeModal(tripDetailModal));
   adminCloseBtn.addEventListener('click', () => closeModal(adminModal));
@@ -470,7 +519,7 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
       localStorage.setItem(userTripsKey, JSON.stringify(existingTrips));
     }
 
-    alert('¡Vuelo registrado con éxito!');
+    showMessage('¡Vuelo registrado con éxito!', 'Registro Completo');
     closeModal(registrationModal);
     document.getElementById('form').reset();
     document.getElementById('msg').textContent = "";
@@ -637,4 +686,5 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
   };
 
   checkLoginStatus();
+  
  });

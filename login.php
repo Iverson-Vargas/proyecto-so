@@ -9,10 +9,12 @@
 <body>
     <div class="auth-container">
         <div class="auth-form-container">
-            <a href="#" class="logo">Vuela<b>Vzla</b></a>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <a href="#" class="logo">Vuela<b>Vzla</b></a>
+                <h2>Control de Vuelos</h2>
+            </div>
             
             <form id="login-form">
-                <h2>Control de Vuelos</h2>
                 <p id="auth-msg" class="error-msg"></p>
                 <label for="login-user">Usuario de Empleado</label>
                 <input type="text" id="login-user" required>

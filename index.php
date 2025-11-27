@@ -57,7 +57,7 @@
         <option value="avion">Avión</option>
       </select>
 
-      <button type="submit">Buscar y Registrar Vuelo</button>
+      <button type="submit">Buscar y Registrar</button>
     </form>
 
     <div class="map-container">
