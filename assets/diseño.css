@@ -1,3 +1,4 @@
+/* diseño.css */
 /* Paleta de colores inspirada en LATAM */
 :root {
   --primary-dark-blue: #002554;
@@ -187,9 +188,7 @@ body {
 /* --- Formulario de Búsqueda --- */
 #form {
   background: var(--white);
-  flex: 1; /* Ocupa el espacio disponible */
-  min-width: 320px; /* Ancho mínimo para el formulario */
-  max-width: 450px; /* Ancho máximo */
+  flex: 0 1 400px; /* No crece, se encoge si es necesario, base de 400px */
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -240,7 +239,7 @@ button:hover {
 
 /* --- Contenedor del Mapa y Resumen --- */
 .map-container {
-  flex: 2;
+  flex: 1 1 60%; /* Crece y se encoge, base del 60% del espacio */
   min-width: 400px;
   position: relative; /* Clave para posicionar el resumen dentro */
 }
@@ -454,7 +453,7 @@ button:hover {
   transition: background-color 0.3s;
 }
 
-.my-trips-btn {
+.my-trips-btn, .admin-btn {
   background: none;
   border: 1px solid var(--primary-dark-blue);
   color: var(--primary-dark-blue);
@@ -465,7 +464,7 @@ button:hover {
   transition: background-color 0.3s, color 0.3s;
   margin-right: 10px; /* Espacio entre este botón y el de cerrar sesión */
 }
-.my-trips-btn:hover { background-color: #eef2f7; }
+.my-trips-btn:hover, .admin-btn:hover { background-color: #eef2f7; }
 #logout-btn:hover {
   background-color: #c03030;
 }
@@ -520,4 +519,94 @@ button:hover {
   font-weight: 600;
   white-space: nowrap; /* Evita que el texto se parta */
   transition: background-color 0.3s;
+}
+
+/* --- Custom Route Segment Label --- */
+.route-segment-label {
+  /* This is the container, make it transparent */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  /* Centering logic for a 140x55px block */
+  margin-left: -70px !important; 
+  margin-top: -28px !important; 
+  width: 140px;
+  height: 55px;
+}
+
+.route-segment-label .segment-label-content {
+  background-color: var(--white);
+  border-radius: 6px;
+  border-left: 3px solid var(--primary-red);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  padding: 5px 8px;
+  text-align: left;
+  font-size: 10px;
+  line-height: 1.3;
+  color: #333;
+  animation: fadeInScale 0.4s ease-out;
+}
+
+.route-segment-label .segment-label-content b {
+  color: var(--primary-dark-blue);
+  font-size: 12px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.route-segment-label .segment-label-content div {
+    margin-bottom: 2px;
+    font-size: 10px;
+}
+
+.route-segment-label .segment-label-content span {
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--primary-red);
+}
+
+/* Keyframe animation for the labels */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scroll para el detalle de vuelo */
+#trip-detail-content {
+  max-height: 450px; /* Altura máxima antes de que aparezca el scroll */
+  overflow-y: auto; /* Muestra el scroll vertical si el contenido excede la altura */
+  padding-right: 15px; /* Espacio para que el scroll no tape el contenido */
+  margin-right: -15px; /* Compensa el padding para mantener el alineamiento */
+}
+
+/* --- Estilos del Panel de Administración --- */
+#admin-modal .auth-modal-content {
+  max-width: 500px;
+}
+
+#create-user-form {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+#employee-list {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.employee-item {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
 }

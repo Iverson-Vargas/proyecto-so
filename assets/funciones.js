@@ -1,3 +1,4 @@
+// funciones.js
 // Aeropuertos principales por estado
 const airports = {
   "Amazonas": [3.4653, -65.1013], 
@@ -76,89 +77,96 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
     formElement.insertBefore(msgElement, formElement.firstChild);
   }
 
-  // --- CREACIÓN DEL MODAL DE PAGO ---
-  const paymentModalHTML = `
-    <div id="payment-modal" class="auth-modal">
+  // --- CREACIÓN DE MODALES ---
+  const registrationModalHTML = `
+    <div id="registration-modal" class="auth-modal">
       <div class="auth-modal-content">
-        <span class="close-btn payment-close-btn">&times;</span>
-        <form id="payment-form" class="auth-form" style="display: flex;">
-          <h2>Formulario de Pago</h2>
-          <p id="payment-summary" style="text-align: left; margin-bottom: 20px;"></p>
-          <label for="card-name">Nombre en la tarjeta</label>
-          <input type="text" id="card-name" required>
-          <label for="card-number">Número de la tarjeta</label>
-          <input type="text" id="card-number" placeholder="0000-0000-0000-0000" required>
-          <div style="display: flex; gap: 10px;">
-            <div style="flex: 1;">
-              <label for="card-expiry">Expiración</label>
-              <input type="text" id="card-expiry" placeholder="MM/AA" required>
-            </div>
-            <div style="flex: 1;">
-              <label for="card-cvv">CVV</label>
-              <input type="text" id="card-cvv" placeholder="123" required>
-            </div>
-          </div>
-          <button type="submit">Pagar y Registrar</button>
+        <span class="close-btn registration-close-btn">&times;</span>
+        <form id="registration-form" class="auth-form" style="display: flex;">
+          <h2>Confirmar Registro de Vuelo</h2>
+          <p id="registration-summary" style="text-align: left; margin-bottom: 20px;"></p>
+          <label for="client-name">Nombre del Pasajero</label>
+          <input type="text" id="client-name" required>
+          <label for="client-id">Cédula o Pasaporte del Pasajero</label>
+          <input type="text" id="client-id" required>
+          <button type="submit">Confirmar y Registrar Vuelo</button>
         </form>
       </div>
     </div>`;
-  document.body.insertAdjacentHTML('beforeend', paymentModalHTML);
+  document.body.insertAdjacentHTML('beforeend', registrationModalHTML);
 
-  // --- CREACIÓN DEL MODAL DE MIS VIAJES ---
   const tripsModalHTML = `
     <div id="trips-modal" class="auth-modal">
       <div class="auth-modal-content" style="max-width: 500px;">
         <span class="close-btn trips-close-btn">&times;</span>
-        <h2>Mis Viajes Registrados</h2>
-        <div id="trips-list">
-          <!-- Los viajes del usuario se insertarán aquí dinámicamente -->
-        </div>
+        <h2>Vuelos Registrados por Usted</h2>
+        <div id="trips-list"></div>
       </div>
     </div>
   `;
   document.body.insertAdjacentHTML('beforeend', tripsModalHTML);
 
-  // --- CREACIÓN DEL MODAL DE DETALLES DEL VIAJE ---
   const tripDetailModalHTML = `
     <div id="trip-detail-modal" class="auth-modal">
       <div class="auth-modal-content">
         <span class="close-btn trip-detail-close-btn">&times;</span>
-        <h2>Detalles del Viaje</h2>
-        <div id="trip-detail-content">
-          <!-- El contenido detallado se insertará aquí -->
-        </div>
+        <h2>Detalles del Vuelo</h2>
+        <div id="trip-detail-content"></div>
       </div>
     </div>
   `;
   document.body.insertAdjacentHTML('beforeend', tripDetailModalHTML);
 
-  const userSessionDiv = document.getElementById('user-session');
+  // --- MODAL DE ADMINISTRACIÓN ---
+  const adminModalHTML = `
+    <div id="admin-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close-btn admin-close-btn">&times;</span>
+            <h2>Panel de Administración</h2>
+            
+            <form id="create-user-form" class="auth-form">
+                <h3>Crear Nuevo Empleado</h3>
+                <label for="new-user-name">Nombre de Usuario:</label>
+                <input type="text" id="new-user-name" required>
+                <label for="new-user-pass">Contraseña:</label>
+                <input type="password" id="new-user-pass" required>
+                <button type="submit">Crear Empleado</button>
+                <p id="admin-msg" class="error-msg"></p>
+            </form>
+
+            <h3>Empleados Actuales</h3>
+            <div id="employee-list"></div>
+        </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', adminModalHTML);
+
+
+  // --- REFERENCIAS A ELEMENTOS DEL DOM ---
   const userGreetingDiv = document.getElementById('user-greeting');
   const usernameDisplay = document.getElementById('username-display');
   const logoutBtn = document.getElementById('logout-btn');
   
-  // Elementos del modal de pago
-  const paymentModal = document.getElementById('payment-modal');
-  const paymentCloseBtn = document.querySelector('.payment-close-btn');
-  const paymentForm = document.getElementById('payment-form');
+  const registrationModal = document.getElementById('registration-modal');
+  const registrationCloseBtn = document.querySelector('.registration-close-btn');
+  const registrationForm = document.getElementById('registration-form');
 
-  // Elementos del modal de "Mis Viajes"
   const tripsModal = document.getElementById('trips-modal');
   const tripsCloseBtn = document.querySelector('.trips-close-btn');
   const tripsListDiv = document.getElementById('trips-list');
 
-  // Elementos del modal de detalles de viaje
   const tripDetailModal = document.getElementById('trip-detail-modal');
   const tripDetailCloseBtn = document.querySelector('.trip-detail-close-btn');
   const tripDetailContent = document.getElementById('trip-detail-content');
 
-  // Variables para almacenar temporalmente los datos de la ruta
-  let waypointSummary = [];
-  let currentBusTime = null;
+  const adminModal = document.getElementById('admin-modal');
+  const adminCloseBtn = document.querySelector('.admin-close-btn');
+  const createUserForm = document.getElementById('create-user-form');
+  const employeeListDiv = document.getElementById('employee-list');
+  const adminMsg = document.getElementById('admin-msg');
 
-  // --- LÓGICA DEL FORMULARIO DE RESERVA ---
 
-  // Checkbox para fecha vuelta
+  // --- LÓGICA DEL FORMULARIO DE BÚSQUEDA ---
   document.getElementById('roundTrip').addEventListener('change', function() {
     const returnContainer = document.getElementById('return-date-container');
     const returnInput = document.getElementById('returnDate');
@@ -166,7 +174,6 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
     returnInput.required = this.checked;
   });
 
-  // Inicializa mapa
   const map = L.map('map', {
     center: [7.5, -66.5],
     zoom: 6,
@@ -177,11 +184,11 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  let control; // para guardar la ruta
+  let control;
+  let routeElementsLayer = L.layerGroup().addTo(map);
 
-  // Función para calcular distancia entre dos puntos (Haversine)
   function getDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Radio de la Tierra en km
+    const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -191,109 +198,147 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
     return R * c;
   }
 
-  function getRoute(start, end, type) {
+  function getRoute(start, end, type, callback) {
     if (type === "avion") {
-      // Distancia en línea recta
       const distKm = getDistance(start[0], start[1], end[0], end[1]);
-      const timeHr = (distKm / 800); // Calculamos horas
-      const flightTime = `${Math.floor(timeHr)}h ${Math.round((timeHr % 1) * 60)}min`; // Formato Xh Ymin
-      L.polyline([start, end], { color: 'blue', weight: 3, dashArray: '5,5' }).addTo(map);
+      const timeHr = (distKm / 800);
+      const flightTime = `${Math.floor(timeHr)}h ${Math.round((timeHr % 1) * 60)}min`;
+      
+      L.polyline([start, end], { color: 'blue', weight: 3, dashArray: '5,5' }).addTo(routeElementsLayer);
+      
       document.getElementById('route-summary').textContent = `✈️ Vuelo: ${distKm.toFixed(1)} km | Tiempo Aprox: ${flightTime}`;
       document.getElementById('route-summary').classList.add('visible');
-    } else {
-      // Ruta terrestre con OSRM (método original)
-      if (control) map.removeControl(control);
-      control = L.Routing.control({
-        waypoints: [
-          L.latLng(start[0], start[1]),
-          L.latLng(end[0], end[1])
-        ],
-        lineOptions: { styles: [{ color: 'red', weight: 4 }] },
-        show: false, // no muestra el panel de texto de la ruta
-        addWaypoints: false,
-        routeWhileDragging: false,
-        draggableWaypoints: false
-      }).addTo(map);
 
-      control.on('routesfound', function(e) {
-        const route = e.routes[0];
-        const summary = route.summary;
-        const distKm = (summary.totalDistance / 1000).toFixed(1);
-        const timeMin = Math.round(summary.totalTime / 60);
-        const busTime = `${Math.floor(timeMin / 60)}h ${timeMin % 60}min`;
-        currentBusTime = busTime; // Guardamos el tiempo total
+      callback({ waypointSummary: null, totalTime: flightTime });
+      return;
+    }
 
-        // --- LÓGICA PARA DETECTAR ESTADOS INTERMEDIOS Y TIEMPO ---
-        const routeCoordinates = route.coordinates;
-        const originState = originSel.value;
-        const destState = destSel.value;
-        const PROXIMITY_THRESHOLD_KM = 30; // Umbral de 30km
-        
-        let intermediateWaypoints = []; // Almacena { state, timeFromStart, distanceFromStart }
-        
-        for (const state in terminals) {
-          if (state !== originState && state !== destState) {
-            const intermediateTerminalCoords = terminals[state].coords;
-            let minDistanceToRoute = Infinity;
-            let closestPointIndex = -1;
+    if (control) map.removeControl(control);
+    control = L.Routing.control({
+      waypoints: [L.latLng(start[0], start[1]), L.latLng(end[0], end[1])],
+      lineOptions: { styles: [{ color: 'red', weight: 4 }] },
+      show: false,
+      addWaypoints: false,
+      routeWhileDragging: false,
+      draggableWaypoints: false,
+      createMarker: function() { return null; } 
+    }).addTo(map);
 
-            // Encuentra el punto en la ruta más cercano a este terminal intermedio
-            routeCoordinates.forEach((point, index) => {
-              const distance = getDistance(intermediateTerminalCoords[0], intermediateTerminalCoords[1], point.lat, point.lng);
-              if (distance < minDistanceToRoute) {
-                minDistanceToRoute = distance;
-                closestPointIndex = index;
-              }
-            });
+    control.on('routesfound', function(e) {
+      const route = e.routes[0];
+      L.geoJSON(route.geometry, { style: { color: 'red', weight: 4 } }).addTo(routeElementsLayer);
 
-            if (minDistanceToRoute <= PROXIMITY_THRESHOLD_KM) {
-              // Aproxima el tiempo y la distancia a este punto en la ruta
-              const timeToPoint = (closestPointIndex / (routeCoordinates.length - 1)) * summary.totalTime;
-              const distanceToPoint = (closestPointIndex / (routeCoordinates.length - 1)) * summary.totalDistance;
-              
-              intermediateWaypoints.push({
-                state: state,
-                timeFromStart: timeToPoint,
-                distanceFromStart: distanceToPoint
-              });
+      const summary = route.summary;
+      const distKm = (summary.totalDistance / 1000).toFixed(1);
+      const timeMin = Math.round(summary.totalTime / 60);
+      const busTime = `${Math.floor(timeMin / 60)}h ${timeMin % 60}min`;
+
+      const routeCoordinates = route.coordinates;
+      const originState = originSel.value;
+      const destState = destSel.value;
+      const PROXIMITY_THRESHOLD_KM = 30;
+      
+      let intermediateWaypoints = [];
+      
+      for (const state in terminals) {
+        if (state !== originState && state !== destState) {
+          const intermediateTerminalCoords = terminals[state].coords;
+          let minDistanceToRoute = Infinity;
+          let closestPointIndex = -1;
+
+          routeCoordinates.forEach((point, index) => {
+            const distance = getDistance(intermediateTerminalCoords[0], intermediateTerminalCoords[1], point.lat, point.lng);
+            if (distance < minDistanceToRoute) {
+              minDistanceToRoute = distance;
+              closestPointIndex = index;
             }
+          });
+
+          if (minDistanceToRoute <= PROXIMITY_THRESHOLD_KM) {
+            const timeToPoint = (closestPointIndex / (routeCoordinates.length - 1)) * summary.totalTime;
+            const distanceToPoint = (closestPointIndex / (routeCoordinates.length - 1)) * summary.totalDistance;
+            
+            intermediateWaypoints.push({
+              state: state,
+              timeFromStart: timeToPoint,
+              distanceFromStart: distanceToPoint,
+              routeIndex: closestPointIndex
+            });
           }
         }
+      }
 
-        // Ordena los puntos de paso por distancia para obtener la secuencia correcta
-        intermediateWaypoints.sort((a, b) => a.distanceFromStart - b.distanceFromStart);
+      intermediateWaypoints.sort((a, b) => a.distanceFromStart - b.distanceFromStart);
 
-        // Ahora, calcula el tiempo entre cada segmento
-        waypointSummary = [];
-        let lastTime = 0;
-        let lastState = originState;
+      let waypointSummary = [];
+      let lastTime = 0;
+      let lastState = originState;
 
-        intermediateWaypoints.forEach(waypoint => {
-          waypointSummary.push({
-            from: lastState,
-            to: waypoint.state,
-            time: waypoint.timeFromStart - lastTime
-          });
-          lastTime = waypoint.timeFromStart;
-          lastState = waypoint.state;
-        });
-
-        // Añade el tramo final hasta el destino
+      intermediateWaypoints.forEach(waypoint => {
         waypointSummary.push({
           from: lastState,
-          to: destState,
-          time: summary.totalTime - lastTime
+          to: waypoint.state,
+          time: waypoint.timeFromStart - lastTime
         });
-        // --- FIN DE LA LÓGICA ---
-
-        // Muestra el resumen en el panel
-        document.getElementById('route-summary').textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
-        document.getElementById('route-summary').classList.add('visible');
+        lastTime = waypoint.timeFromStart;
+        lastState = waypoint.state;
       });
-    }
+
+      waypointSummary.push({
+        from: lastState,
+        to: destState,
+        time: summary.totalTime - lastTime
+      });
+
+      const recorridoLabels = ["Primer", "Segundo", "Tercer", "Cuarto", "Quinto", "Sexto", "Séptimo", "Octavo", "Noveno", "Décimo"];
+      if (waypointSummary && waypointSummary.length > 0) {
+          waypointSummary.forEach((segment, index) => {
+              const timeInSeconds = segment.time;
+              if (timeInSeconds > 0) {
+                  const segmentTime = `${Math.floor(timeInSeconds / 3600)}h ${Math.round((timeInSeconds % 3600) / 60)}min`;
+                  const label = recorridoLabels[index] || `${index + 1}º`;
+                  
+                  const fromWp = intermediateWaypoints.find(wp => wp.state === segment.from);
+                  const toWp = intermediateWaypoints.find(wp => wp.state === segment.to);
+
+                  const fromIndex = (segment.from === originState) ? 0 : fromWp.routeIndex;
+                  const toIndex = (segment.to === destState) ? route.coordinates.length - 1 : toWp.routeIndex;
+
+                  const midpointIndex = Math.floor((fromIndex + toIndex) / 2);
+                  const midpointCoord = route.coordinates[midpointIndex];
+
+                  const labelIcon = L.divIcon({
+                      className: 'route-segment-label',
+                      html: `
+                          <div class="segment-label-content">
+                              <b>${label} Recorrido</b>
+                              <div>${segment.from} → ${segment.to}</div>
+                              <span>${segmentTime}</span>
+                          </div>
+                      `,
+                      iconSize: [140, 55]
+                  });
+
+                  if (midpointCoord) {
+                    L.marker(midpointCoord, { icon: labelIcon }).addTo(routeElementsLayer);
+                  }
+              }
+          });
+      }
+
+      document.getElementById('route-summary').textContent = `🚌 Ruta en bus: ${distKm} km | Tiempo: ${busTime}`;
+      document.getElementById('route-summary').classList.add('visible');
+
+      callback({ waypointSummary: waypointSummary, totalTime: busTime });
+    });
+
+    control.on('routingerror', function(e) {
+        console.error("Routing error:", e.error);
+        document.getElementById('msg').textContent = "No se pudo encontrar una ruta. Verifique los puntos de origen y destino.";
+        callback(null);
+    });
   }
 
-  // Evento de envío del formulario
   document.getElementById('form').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -305,14 +350,18 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
     const type = document.getElementById('type').value;
     const msg = document.getElementById('msg');
     
-    // Limpia mensajes y clases anteriores
     msg.textContent = "";
-    msg.className = ""; // Limpia clases como 'success-message'
+    msg.className = "";
     document.getElementById('route-summary').classList.remove('visible');
-    waypointSummary = []; // Reseteamos el resumen de ruta
-    currentBusTime = null; // Reseteamos el tiempo total
+    const existingBtn = document.getElementById('register-flight-btn');
+    if (existingBtn) existingBtn.remove();
+    
+    routeElementsLayer.clearLayers();
+    if (control) {
+      map.removeControl(control);
+      control = null;
+    }
 
-    // Validaciones básicas
     if (!origin || !dest || !depDate) {
       msg.textContent = "Completa todos los campos obligatorios.";
       return;
@@ -321,17 +370,11 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
       msg.textContent = "Origen y destino deben ser diferentes.";
       return;
     }
-
-    // Validación de fechas
     const today = new Date();
-    today.setHours(0,0,0,0); // Normalizamos a medianoche
+    today.setHours(0,0,0,0);
     const isRoundTrip = document.getElementById('roundTrip').checked;
-
-    // Corrección: Normalizar fechas de input para evitar problemas de zona horaria
     const depParts = depDate.split('-');
     const dep = new Date(depParts[0], depParts[1] - 1, depParts[2]);
-
-    // Solo valida la fecha de vuelta si es un viaje de ida y vuelta y el campo no está vacío
     const ret = isRoundTrip && retDate ? new Date(retDate.split('-')[0], retDate.split('-')[1] - 1, retDate.split('-')[2]) : null;
 
     if (dep < today) {
@@ -340,22 +383,9 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
     }
     if (ret && ret < dep) {
       msg.textContent = "La fecha de vuelta no puede ser anterior a la fecha de ida.";
-      return; // Detiene la ejecución
+      return;
     }
 
-    // Limpia capas anteriores
-    map.eachLayer(layer => {
-      if (layer instanceof L.Marker || layer instanceof L.Polyline) {
-        map.removeLayer(layer);
-      }
-    });
-    document.getElementById('route-summary').textContent = ""; // Limpia el resumen anterior
-    if (control) {
-      map.removeControl(control);
-      control = null;
-    }
-
-    // Selecciona coordenadas según transporte
     let start, end;
     if (type === "avion") {
       start = airports[origin];
@@ -365,210 +395,242 @@ Object.keys(airports).forEach(loc => { // usamos aeropuertos como referencia de 
       end = terminals[dest].coords;
     }
 
-     // Agrega marcadores para partida y llegada
-     L.marker(start).addTo(map).bindPopup(`<b>Salida:</b> ${origin}`).openPopup();
-     L.marker(end).addTo(map).bindPopup(`<b>Destino:</b> ${dest}`);
+     L.marker(start).addTo(routeElementsLayer).bindPopup(`<b>Salida:</b> ${origin}`).openPopup();
+     L.marker(end).addTo(routeElementsLayer).bindPopup(`<b>Destino:</b> ${dest}`);
      map.fitBounds([start, end], { padding: [20, 20] });
    
-     // Llama a la función de cálculo de ruta
-     getRoute(start, end, type);
-   
-     // --- LÓGICA DE CONFIRMACIÓN Y REGISTRO DE COMPRA ---
-     const currentUser = sessionStorage.getItem('currentUser');
-     const reservationDetails = `Reserva: ${pass} pasajero(s), Ida: ${depDate}${retDate ? ', Vuelta: ' + retDate : ''}, Tipo: ${type}.`;
-     
-     // Objeto detallado para guardar en localStorage
-     const tripData = {
-       origin: origin,
-       dest: dest,
-       passengers: pass,
-       departureDate: depDate,
-       returnDate: retDate || null, // Guardar null si no hay fecha de vuelta
-       transportType: type,
-       waypointSummary: (type === 'bus') ? waypointSummary : null,
-       totalTime: (type === 'bus') ? currentBusTime : null
+     const handleRouteData = (routeData) => {
+        if (!routeData) return;
+
+        const flightDetails = `Datos del Vuelo: ${pass} pasajero(s), Ida: ${depDate}${retDate ? ', Vuelta: ' + retDate : ''}, Tipo: ${type}.`;
+        msg.textContent = flightDetails;
+        msg.classList.add('success-message');
+
+        const tripData = {
+           origin: origin,
+           dest: dest,
+           passengers: pass,
+           departureDate: depDate,
+           returnDate: retDate || null,
+           transportType: type,
+           waypointSummary: routeData.waypointSummary,
+           totalTime: routeData.totalTime
+        };
+
+        const registerBtn = document.createElement('button');
+        registerBtn.textContent = 'Registrar Vuelo para Cliente';
+        registerBtn.id = 'register-flight-btn';
+        registerBtn.className = 'btn-register-purchase';
+        registerBtn.type = 'button';
+        
+        registerBtn.onclick = () => {
+           document.getElementById('registration-summary').textContent = flightDetails;
+           registrationForm.dataset.tripData = JSON.stringify(tripData);
+           registrationModal.classList.add('visible');
+        };
+
+        msg.insertAdjacentElement('afterend', registerBtn);
      };
-
-     if (currentUser) {
-       // Usuario ha iniciado sesión
-       msg.textContent = reservationDetails;
-       msg.classList.add('success-message');
-
-       // Crear y añadir el botón de "Registrar Compra"
-       const existingBtn = document.getElementById('register-purchase-btn');
-       if (existingBtn) existingBtn.remove(); // Elimina el botón si ya existe
-
-       const registerBtn = document.createElement('button');
-       registerBtn.textContent = 'Registrar Compra';
-       registerBtn.id = 'register-purchase-btn';
-       registerBtn.className = 'btn-register-purchase';
-       registerBtn.type = 'button'; // Importante para que no envíe el formulario
-       
-       registerBtn.onclick = () => {
-         // Actualizamos el objeto tripData justo antes de abrir el modal de pago
-         // para asegurarnos de que los datos de la ruta asíncrona estén listos.
-         tripData.waypointSummary = (type === 'bus') ? waypointSummary : null;
-         tripData.totalTime = (type === 'bus') ? currentBusTime : null;
-
-         document.getElementById('payment-summary').textContent = reservationDetails;
-         // Guardar temporalmente los datos del viaje para usarlos en el pago
-         paymentForm.dataset.tripData = JSON.stringify(tripData);
-         paymentModal.classList.add('visible');
-       };
-
-       msg.insertAdjacentElement('afterend', registerBtn);
-
-     } else {
-       // Usuario NO ha iniciado sesión
-       msg.innerHTML = `Para registrar la compra, por favor <a href="login.php">inicia sesión</a>.`;
-     }
+   
+     getRoute(start, end, type, handleRouteData);
   });
 
-  const closePaymentModal = () => {
-    paymentModal.classList.remove('visible');
+  const closeModal = (modal) => {
+    modal.classList.remove('visible');
   };
 
-  tripsCloseBtn.addEventListener('click', () => {
-    tripsModal.classList.remove('visible');
-  });
-
-  tripDetailCloseBtn.addEventListener('click', () => {
-    tripDetailModal.classList.remove('visible');
-  });
-
-  paymentCloseBtn.addEventListener('click', closePaymentModal);
+  registrationCloseBtn.addEventListener('click', () => closeModal(registrationModal));
+  tripsCloseBtn.addEventListener('click', () => closeModal(tripsModal));
+  tripDetailCloseBtn.addEventListener('click', () => closeModal(tripDetailModal));
+  adminCloseBtn.addEventListener('click', () => closeModal(adminModal));
 
   window.addEventListener('click', (e) => {
-    if (e.target === paymentModal || e.target === tripsModal || e.target === tripDetailModal) {
-      e.target.classList.remove('visible');
+    if (e.target.classList.contains('auth-modal')) {
+      closeModal(e.target);
     }
   });
 
-  // --- Lógica del Formulario de Pago ---
-  paymentForm.addEventListener('submit', (e) => {
+  registrationForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // --- GUARDAR VIAJE EN LOCALSTORAGE ---
     const currentUser = sessionStorage.getItem('currentUser');
     const tripDataString = e.target.dataset.tripData;
 
     if (currentUser && tripDataString) {
+      const tripData = JSON.parse(tripDataString);
+      
+      tripData.clientName = document.getElementById('client-name').value;
+      tripData.clientId = document.getElementById('client-id').value;
+      tripData.registeredBy = currentUser;
+      tripData.registrationTimestamp = new Date().toISOString();
+
       const userTripsKey = `trips_${currentUser}`;
-      // Obtenemos los viajes existentes o creamos un array vacío
       const existingTrips = JSON.parse(localStorage.getItem(userTripsKey)) || [];
-      // Añadimos el nuevo viaje
-      existingTrips.push(JSON.parse(tripDataString));
-      // Guardamos el array actualizado
+      existingTrips.push(tripData);
       localStorage.setItem(userTripsKey, JSON.stringify(existingTrips));
     }
 
-    alert('¡Pago procesado con éxito! Tu compra ha sido registrada.');
-    closePaymentModal();
-    // Limpiar formulario de reserva y mensajes
+    alert('¡Vuelo registrado con éxito!');
+    closeModal(registrationModal);
     document.getElementById('form').reset();
-    msg.textContent = "";
-    document.getElementById('register-purchase-btn')?.remove();
+    document.getElementById('msg').textContent = "";
+    document.getElementById('register-flight-btn')?.remove();
     document.getElementById('route-summary').classList.remove('visible');
   });
 
-  // --- Lógica de Cierre de Sesión ---
   logoutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem('currentUser');
+    sessionStorage.clear();
     window.location.href = 'login.php';
   });
 
-  // --- Funciones para actualizar la interfaz ---
-  function updateUIForLoggedInUser(user) {
-    userGreetingDiv.style.display = 'flex';
-    usernameDisplay.textContent = `Hola, ${user}`; 
+  // --- LÓGICA DE ADMINISTRACIÓN ---
+  const populateEmployeeList = () => {
+      const users = JSON.parse(localStorage.getItem('app_users'));
+      employeeListDiv.innerHTML = '';
+      for (const username in users) {
+          if (username !== 'administrador') {
+              const item = document.createElement('div');
+              item.className = 'employee-item';
+              item.textContent = username;
+              employeeListDiv.appendChild(item);
+          }
+      }
+  };
 
-    // Crear y mostrar el botón "Mis Viajes" si no existe
-    if (!document.getElementById('my-trips-btn')) {
-      const myTripsBtn = document.createElement('button');
-      myTripsBtn.textContent = 'Mis Viajes';
-      myTripsBtn.id = 'my-trips-btn';
-      myTripsBtn.className = 'my-trips-btn';
+  createUserForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newUserName = document.getElementById('new-user-name').value;
+      const newUserPass = document.getElementById('new-user-pass').value;
+      adminMsg.textContent = '';
+
+      if (!newUserName || !newUserPass) {
+          adminMsg.textContent = 'Ambos campos son obligatorios.';
+          return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('app_users'));
+
+      if (users[newUserName]) {
+          adminMsg.textContent = 'Ese nombre de usuario ya existe.';
+          return;
+      }
+
+      users[newUserName] = newUserPass;
+      localStorage.setItem('app_users', JSON.stringify(users));
       
-      myTripsBtn.addEventListener('click', () => {
-        const currentUser = sessionStorage.getItem('currentUser');
-        const userTripsKey = `trips_${currentUser}`;
-        const trips = JSON.parse(localStorage.getItem(userTripsKey)) || [];
+      adminMsg.textContent = `Empleado '${newUserName}' creado con éxito.`;
+      adminMsg.style.color = 'green';
+      createUserForm.reset();
+      populateEmployeeList();
+  });
 
-        tripsListDiv.innerHTML = ''; // Limpiar lista anterior
 
-        if (trips.length > 0) {
-          trips.reverse().forEach((trip, index) => { // .reverse() para mostrar el más reciente primero
-            const tripElement = document.createElement('div');
-            tripElement.className = 'trip-item';
-            
-            const tripText = document.createElement('span');
-            tripText.textContent = `De ${trip.origin} a ${trip.dest} (${trip.departureDate})`;
+  // --- FUNCIONES PARA ACTUALIZAR LA INTERFAZ ---
+  function updateUIForLoggedInUser(user, role) {
+    userGreetingDiv.style.display = 'flex';
+    usernameDisplay.textContent = `Usuario: ${user}`; 
 
-            const infoBtn = document.createElement('button');
-            infoBtn.textContent = 'Información';
-            infoBtn.className = 'btn-trip-info';
-            infoBtn.onclick = () => {
-              let waypointSummaryHTML = '';
-              const recorridoLabels = ["Primer", "Segundo", "Tercer", "Cuarto", "Quinto", "Sexto", "Séptimo", "Octavo", "Noveno", "Décimo"];
+    if (role === 'admin') {
+        // --- VISTA DE ADMINISTRADOR ---
+        // El administrador ahora ve la interfaz normal Y tiene acceso al panel de admin.
+        
+        const adminBtn = document.createElement('button');
+        adminBtn.textContent = 'Creación de Empleado';
+        adminBtn.className = 'admin-btn';
+        adminBtn.onclick = () => {
+            populateEmployeeList();
+            adminModal.classList.add('visible');
+        };
+        logoutBtn.insertAdjacentElement('beforebegin', adminBtn);
 
-              // Si es un viaje en bus y tiene un resumen de ruta, lo formateamos
-              if (trip.transportType === 'bus' && trip.waypointSummary && trip.waypointSummary.length > 0) {
-                waypointSummaryHTML += '<h4>Resumen de la Ruta:</h4><ul style="padding-left: 0; text-align: left; list-style-type: none;">';
-                trip.waypointSummary.forEach((segment, index) => {
-                  const timeInSeconds = segment.time;
-                  // No mostrar segmentos con tiempo 0 o negativo
-                  if (timeInSeconds > 0) {
-                    const segmentTime = `${Math.floor(timeInSeconds / 3600)}h ${Math.round((timeInSeconds % 3600) / 60)}min`;
-                    const label = recorridoLabels[index] || `${index + 1}º`;
-                    
-                    waypointSummaryHTML += `
-                      <li style="margin-bottom: 12px; border-left: 3px solid #ccc; padding-left: 10px;">
-                        <div style="font-weight: bold;">${label} Recorrido</div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                          <span>${segment.from} → ${segment.to}</span>
-                          <span style="color: #555; font-style: italic;">${segmentTime}</span>
-                        </div>
-                      </li>`;
+    } else {
+        // --- VISTA DE EMPLEADO ---
+        if (!document.getElementById('my-trips-btn')) {
+          const myTripsBtn = document.createElement('button');
+          myTripsBtn.textContent = 'Vuelos Registrados';
+          myTripsBtn.id = 'my-trips-btn';
+          myTripsBtn.className = 'my-trips-btn';
+          
+          myTripsBtn.addEventListener('click', () => {
+            const currentUser = sessionStorage.getItem('currentUser');
+            const userTripsKey = `trips_${currentUser}`;
+            const trips = JSON.parse(localStorage.getItem(userTripsKey)) || [];
+
+            tripsListDiv.innerHTML = '';
+
+            if (trips.length > 0) {
+              trips.reverse().forEach((trip) => {
+                const tripElement = document.createElement('div');
+                tripElement.className = 'trip-item';
+                
+                const tripText = document.createElement('span');
+                tripText.textContent = `Cliente: ${trip.clientName} | Vuelo: ${trip.origin} a ${trip.dest}`;
+
+                const infoBtn = document.createElement('button');
+                infoBtn.textContent = 'Detalles';
+                infoBtn.className = 'btn-trip-info';
+                infoBtn.onclick = () => {
+                  
+                  let waypointSummaryHTML = '';
+                  if (trip.transportType === 'bus' && trip.waypointSummary && trip.waypointSummary.length > 0) {
+                    waypointSummaryHTML += '<h4>Resumen de la Ruta:</h4><ul style="padding-left: 0; text-align: left; list-style-type: none;">';
+                    const recorridoLabels = ["Primer", "Segundo", "Tercer", "Cuarto", "Quinto", "Sexto", "Séptimo", "Octavo", "Noveno", "Décimo"];
+                    trip.waypointSummary.forEach((segment, index) => {
+                      const timeInSeconds = segment.time;
+                      if (timeInSeconds > 0) {
+                        const segmentTime = `${Math.floor(timeInSeconds / 3600)}h ${Math.round((timeInSeconds % 3600) / 60)}min`;
+                        const label = recorridoLabels[index] || `${index + 1}º`;
+                        
+                        waypointSummaryHTML += `
+                          <li style="margin-bottom: 12px; border-left: 3px solid #ccc; padding-left: 10px;">
+                            <div style="font-weight: bold;">${label} Recorrido</div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                              <span>${segment.from} → ${segment.to}</span>
+                              <span style="color: #555; font-style: italic;">${segmentTime}</span>
+                            </div>
+                          </li>`;
+                      }
+                    });
+                    waypointSummaryHTML += '</ul>';
                   }
-                });
-                waypointSummaryHTML += '</ul>';
 
-                if (trip.totalTime) {
-                    waypointSummaryHTML += `<hr><p style="text-align: right; font-weight: bold; margin-top: 10px;">Total de Horas: ${trip.totalTime}</p>`;
-                }
-              }
+                  tripDetailContent.innerHTML = `
+                    <p><strong>Cliente:</strong> ${trip.clientName} (C.I./Pasaporte: ${trip.clientId})</p>
+                    <hr>
+                    <p><strong>Origen:</strong> ${trip.origin}</p>
+                    <p><strong>Destino:</strong> ${trip.dest}</p>
+                    <p><strong>Pasajeros:</strong> ${trip.passengers}</p>
+                    <p><strong>Fecha de Ida:</strong> ${trip.departureDate}</p>
+                    ${trip.returnDate ? `<p><strong>Fecha de Vuelta:</strong> ${trip.returnDate}</p>` : ''}
+                    <p><strong>Transporte:</strong> ${trip.transportType === 'avion' ? 'Avión ✈️' : 'Autobús 🚌'} (${trip.totalTime})</p>
+                    ${waypointSummaryHTML}
+                    <hr>
+                    <p style="font-size: 0.8rem; color: #666;">Registrado por: ${trip.registeredBy} el ${new Date(trip.registrationTimestamp).toLocaleString()}</p>
+                  `;
+                  tripDetailModal.classList.add('visible');
+                };
 
-              tripDetailContent.innerHTML = `
-                <p><strong>Origen:</strong> ${trip.origin}</p>
-                <p><strong>Destino:</strong> ${trip.dest}</p>
-                <p><strong>Pasajeros:</strong> ${trip.passengers}</p>
-                <p><strong>Fecha de Ida:</strong> ${trip.departureDate}</p>
-                ${trip.returnDate ? `<p><strong>Fecha de Vuelta:</strong> ${trip.returnDate}</p>` : ''}
-                <p><strong>Transporte:</strong> ${trip.transportType === 'avion' ? 'Avión ✈️' : 'Autobús 🚌'}</p>
-                ${waypointSummaryHTML}
-              `;
-              tripDetailModal.classList.add('visible');
-            };
-
-            tripElement.appendChild(tripText);
-            tripElement.appendChild(infoBtn);
-            tripsListDiv.appendChild(tripElement);
+                tripElement.appendChild(tripText);
+                tripElement.appendChild(infoBtn);
+                tripsListDiv.appendChild(tripElement);
+              });
+            } else {
+              tripsListDiv.innerHTML = '<p>Aún no has registrado ningún vuelo.</p>';
+            }
+            tripsModal.classList.add('visible');
           });
-        } else {
-          tripsListDiv.innerHTML = '<p>Aún no has registrado ningún viaje.</p>';
-        }
-        tripsModal.classList.add('visible');
-      });
 
-      logoutBtn.insertAdjacentElement('beforebegin', myTripsBtn);
+          logoutBtn.insertAdjacentElement('beforebegin', myTripsBtn);
+        }
     }
   }
 
   // --- Comprobar estado de sesión al cargar la página ---
   const checkLoginStatus = () => {
     const currentUser = sessionStorage.getItem('currentUser');
-    if (currentUser) {
-      updateUIForLoggedInUser(currentUser);
+    const userRole = sessionStorage.getItem('userRole');
+    if (currentUser && userRole) {
+      updateUIForLoggedInUser(currentUser, userRole);
     } else {
       window.location.href = 'login.php';
     }

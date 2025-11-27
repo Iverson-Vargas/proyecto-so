@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Agencia de Viajes Venezuela</title>
+  <title>Sistema de Registro de Vuelos - VuelaVzla</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -25,6 +25,7 @@
 
   <main id="contenido-principal">
     <form id="form">
+        <h2>Registro de Vuelos de Pasajeros</h2>
       <label class="checkbox-container">Viaje de ida y vuelta
         <input type="checkbox" id="roundTrip">
         <span class="checkmark"></span>
@@ -56,7 +57,7 @@
         <option value="avion">Avión</option>
       </select>
 
-      <button type="submit">Reservar y Mostrar Ruta</button>
+      <button type="submit">Buscar y Registrar Vuelo</button>
     </form>
 
     <div class="map-container">
@@ -72,20 +73,18 @@
     <div class="footer-container">
       <div class="footer-column">
         <h3>Sobre VuelaVzla</h3>
-        <p>Tu agencia de viajes de confianza para descubrir las maravillas de Venezuela. Ofrecemos las mejores rutas y precios para que explores el país de punta a punta.</p>
+        <p>Sistema interno para la gestión y registro de vuelos a nivel nacional. Herramienta exclusiva para personal autorizado.</p>
       </div>
       <div class="footer-column">
-        <h3>Síguenos</h3>
+        <h3>Soporte</h3>
         <div class="social-links">
-          <a href="#">Facebook</a>
-          <a href="#">Instagram</a>
-          <a href="#">Twitter / X</a>
-
+          <a href="#">Contactar a TI</a>
+          <a href="#">Manual de Usuario</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 VuelaVzla. Todos los derechos reservados.</p>
+      <p>&copy; 2025 VuelaVzla. Sistema Interno.</p>
     </div>
   </footer>
 
